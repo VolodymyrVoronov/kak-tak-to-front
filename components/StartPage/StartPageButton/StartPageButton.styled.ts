@@ -10,13 +10,11 @@ const StartPageButtonBox = styled.button`
   display: flex;
   justify-content: center;
 
-  width: 500px;
-
   margin-top: 50px;
-  padding: 20px 0;
+  padding: 10px 75px;
 
-  font-size: 32px;
-  line-height: 36px;
+  font-size: 22px;
+  line-height: 26px;
   font-weight: 500;
 
   border: 1px solid ${colors.blackOpacity04};

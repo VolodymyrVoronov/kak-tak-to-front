@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Tilt from "react-parallax-tilt";
 
 import { HiEmojiSad } from "react-icons/hi";
@@ -20,6 +21,12 @@ import {
 } from "./StartPage.styled";
 
 const StartPage = (): React.ReactElement => {
+  const router = useRouter();
+
+  const onSigninButtonClick = () => {
+    router.push("/signin");
+  };
+
   return (
     <StartPageContainer>
       <StartPageLeftSide>
@@ -35,7 +42,7 @@ const StartPage = (): React.ReactElement => {
         </StartPageRightSideSmallSmile>
         <StartPageRightSideTitle>“Как так-то...!?”</StartPageRightSideTitle>
         <StartPageRightSideJoinText>Присоединяйся сегодня.</StartPageRightSideJoinText>
-        <StartPageButton buttonText="Регистрация" />
+        <StartPageButton onClick={onSigninButtonClick} buttonText="Регистрация" />
         <StartPageRightSideLoginBox>
           <StartPageRightSideLoginText>Уже есть аккаунт?</StartPageRightSideLoginText>
           <StartPageRightSideLoginLink>

@@ -48,8 +48,8 @@ const StartPageRightSideTitle = styled.h1`
 
   margin-top: 75px;
 
-  font-size: 64px;
-  line-height: 68px;
+  font-size: 44px;
+  line-height: 48px;
   font-weight: 700;
 `;
 
@@ -58,8 +58,8 @@ const StartPageRightSideJoinText = styled.p`
 
   margin-top: 30px;
 
-  font-size: 36px;
-  line-height: 40px;
+  font-size: 24px;
+  line-height: 28px;
   font-weight: 500;
 `;
 
@@ -74,16 +74,16 @@ const StartPageRightSideLoginText = styled.p`
 
   margin-right: 5px;
 
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 22px;
+  line-height: 26px;
   font-weight: 500;
 `;
 
 const StartPageRightSideLoginLink = styled.span`
   display: flex;
 
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 22px;
+  line-height: 26px;
   font-weight: 500;
 
   a {
@@ -91,6 +91,10 @@ const StartPageRightSideLoginLink = styled.span`
 
     list-style: none;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

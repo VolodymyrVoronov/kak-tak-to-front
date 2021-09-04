@@ -4,12 +4,15 @@ import { StartPageButtonСontainer, StartPageButtonBox } from "./StartPageButton
 
 interface StartPageButtonProps {
   buttonText: string;
+  onClick: () => void;
 }
 
-const StartPageButton = ({ buttonText }: StartPageButtonProps): React.ReactElement => {
+const StartPageButton = ({ buttonText, onClick }: StartPageButtonProps): React.ReactElement => {
   return (
     <StartPageButtonСontainer>
-      <StartPageButtonBox type="button">{buttonText}</StartPageButtonBox>
+      <StartPageButtonBox onClick={onClick} type="button">
+        {buttonText}
+      </StartPageButtonBox>
     </StartPageButtonСontainer>
   );
 };
