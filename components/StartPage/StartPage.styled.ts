@@ -98,6 +98,32 @@ const StartPageRightSideLoginLink = styled.span`
   }
 `;
 
+const StartPageRightSideLinkToPosts = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: 90px;
+
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+
+  color: ${colors.primaryBlue};
+
+  a {
+    margin-right: 10px;
+
+    color: ${colors.primaryBlue};
+
+    list-style: none;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 export {
   StartPageContainer,
   StartPageLeftSide,
@@ -109,4 +135,5 @@ export {
   StartPageRightSideLoginBox,
   StartPageRightSideLoginText,
   StartPageRightSideLoginLink,
+  StartPageRightSideLinkToPosts,
 };

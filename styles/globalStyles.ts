@@ -169,7 +169,7 @@ const GlobalStyles = createGlobalStyle`
     user-select: none;
   }
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 10px;
   }
 
@@ -183,7 +183,7 @@ const GlobalStyles = createGlobalStyle`
 
   ::-webkit-scrollbar-thumb:hover {
     background: '';
-  }
+  } */
 `;
 
 export default GlobalStyles;

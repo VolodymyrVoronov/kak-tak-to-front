@@ -49,6 +49,9 @@ const LoginForm = (): React.ReactElement => {
     router.push("/");
   };
 
+  const isLoginButtonDisabled = formData.login.length === 0 || formData.password.length === 0;
+  const isClearButtonDisabled = formData.login.length === 0 && formData.password.length === 0;
+
   return (
     <LoginFormContainer>
       <LoginFormBody>
@@ -77,8 +80,10 @@ const LoginForm = (): React.ReactElement => {
           </LoginFormField>
         </LoginFormFields>
         <LoginFormButtons>
-          <LoginFormButtonLogin type="button">Вход</LoginFormButtonLogin>
-          <LoginFormButtonClear onClick={onClearButtonClick} type="button">
+          <LoginFormButtonLogin onClick={onLoginButtoCick} disabled={isLoginButtonDisabled} type="button">
+            Вход
+          </LoginFormButtonLogin>
+          <LoginFormButtonClear onClick={onClearButtonClick} disabled={isClearButtonDisabled} type="button">
             Очистить
           </LoginFormButtonClear>
           <LoginFormButtonBack onClick={onBackButtonClick} type="button">

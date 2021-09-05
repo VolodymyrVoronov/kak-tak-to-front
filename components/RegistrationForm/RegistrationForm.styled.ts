@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { colors } from "../../styles/colorPalette";
 
-const LoginFormContainer = styled.div`
+const RegistrationFormContainer = styled.div`
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: 100%;
@@ -19,14 +19,14 @@ const LoginFormContainer = styled.div`
   /* background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(229,107,111,0.4962359943977591) 100%); */
 `;
 
-const LoginFormBody = styled.form`
+const RegistrationFormBody = styled.form`
   display: flex;
   flex-direction: column;
 
   width: 500px;
 `;
 
-const LoginFormTitle = styled.h2`
+const RegistrationFormTitle = styled.h2`
   display: block;
 
   font-size: 32px;
@@ -36,17 +36,17 @@ const LoginFormTitle = styled.h2`
   text-decoration: underline;
 `;
 
-const LoginFormFields = styled.div`
+const RegistrationFormFields = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const LoginFormField = styled.div`
+const RegistrationFormField = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const LoginFormFieldLabel = styled.label`
+const RegistrationFormFieldLabel = styled.label`
   display: flex;
 
   margin-top: 67px;
@@ -56,7 +56,7 @@ const LoginFormFieldLabel = styled.label`
   font-weight: 500;
 `;
 
-const LoginFormFieldInput = styled.input`
+const RegistrationFormFieldInput = styled.input`
   display: flex;
 
   margin-top: 10px;
@@ -84,7 +84,7 @@ const LoginFormFieldInput = styled.input`
   }
 `;
 
-const LoginFormButtons = styled.div`
+const RegistrationFormButtons = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr auto;
@@ -131,27 +131,27 @@ const Button = styled.button`
   }
 `;
 
-const LoginFormButtonLogin = styled(Button)`
+const RegistrationFormButtonLogin = styled(Button)`
   grid-area: a;
 `;
-const LoginFormButtonClear = styled(Button)`
+const RegistrationFormButtonClear = styled(Button)`
   grid-area: b;
 `;
 
-const LoginFormButtonBack = styled(Button)`
+const RegistrationFormButtonBack = styled(Button)`
   grid-area: c;
 `;
 
 export {
-  LoginFormContainer,
-  LoginFormBody,
-  LoginFormTitle,
-  LoginFormFields,
-  LoginFormField,
-  LoginFormFieldLabel,
-  LoginFormFieldInput,
-  LoginFormButtons,
-  LoginFormButtonLogin,
-  LoginFormButtonClear,
-  LoginFormButtonBack,
+  RegistrationFormContainer,
+  RegistrationFormBody,
+  RegistrationFormTitle,
+  RegistrationFormFields,
+  RegistrationFormField,
+  RegistrationFormFieldLabel,
+  RegistrationFormFieldInput,
+  RegistrationFormButtons,
+  RegistrationFormButtonLogin,
+  RegistrationFormButtonClear,
+  RegistrationFormButtonBack,
 };
