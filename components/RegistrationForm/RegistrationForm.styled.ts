@@ -56,8 +56,42 @@ const RegistrationFormFieldLabel = styled.label`
   font-weight: 500;
 `;
 
+const RegistrationFormFieldInputPassword = styled.div`
+  position: relative;
+  display: flex;
+  align-items: baseline;
+
+  input {
+    padding-right: 46px;
+  }
+`;
+
+const RegistrationFormFieldInputShowPasswordButton = styled.span`
+  position: absolute;
+  display: flex;
+
+  top: 18px;
+  right: 0;
+
+  padding: 0 10px;
+
+  font-size: 26px;
+
+  transition: 250ms ease;
+
+  &:hover {
+    cursor: pointer;
+
+    color: ${colors.primaryBlue};
+
+    transition: 250ms ease;
+  }
+`;
+
 const RegistrationFormFieldInput = styled.input`
   display: flex;
+
+  width: 100%;
 
   margin-top: 10px;
   padding: 5px;
@@ -149,6 +183,8 @@ export {
   RegistrationFormFields,
   RegistrationFormField,
   RegistrationFormFieldLabel,
+  RegistrationFormFieldInputPassword,
+  RegistrationFormFieldInputShowPasswordButton,
   RegistrationFormFieldInput,
   RegistrationFormButtons,
   RegistrationFormButtonLogin,

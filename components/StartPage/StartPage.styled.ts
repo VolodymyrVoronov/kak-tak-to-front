@@ -108,10 +108,8 @@ const StartPageRightSideLinkToPosts = styled.div`
   line-height: 22px;
   font-weight: 400;
 
-  color: ${colors.primaryBlue};
-
   a {
-    margin-right: 10px;
+    margin-left: 10px;
 
     color: ${colors.primaryBlue};
 

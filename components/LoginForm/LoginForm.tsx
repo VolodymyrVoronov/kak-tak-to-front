@@ -1,6 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 
+import { HiEye, HiEyeOff } from "react-icons/hi";
+
 import {
   LoginFormContainer,
   LoginFormBody,
@@ -8,6 +10,8 @@ import {
   LoginFormFields,
   LoginFormField,
   LoginFormFieldLabel,
+  LoginFormFieldInputPassword,
+  LoginFormFieldInputShowPasswordButton,
   LoginFormFieldInput,
   LoginFormButtons,
   LoginFormButtonLogin,
@@ -29,6 +33,8 @@ const LoginForm = (): React.ReactElement => {
   const router = useRouter();
 
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
+  const loginInput = React.useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const onFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((formData) => ({
@@ -43,11 +49,22 @@ const LoginForm = (): React.ReactElement => {
 
   const onClearButtonClick = () => {
     setFormData(initialFormState);
+    setShowPassword(false);
   };
 
   const onBackButtonClick = () => {
     router.push("/");
   };
+
+  const onShowPasswordClick = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
+
+  React.useEffect(() => {
+    if (loginInput && loginInput.current) {
+      loginInput.current.focus();
+    }
+  }, []);
 
   const isLoginButtonDisabled = formData.login.length === 0 || formData.password.length === 0;
   const isClearButtonDisabled = formData.login.length === 0 && formData.password.length === 0;
@@ -65,18 +82,24 @@ const LoginForm = (): React.ReactElement => {
               type="text"
               id="login"
               name="login"
+              ref={loginInput}
             />
           </LoginFormField>
 
           <LoginFormField>
             <LoginFormFieldLabel htmlFor="password">Пароль:</LoginFormFieldLabel>
-            <LoginFormFieldInput
-              onChange={onFormInputChange}
-              value={formData.password}
-              type="password"
-              id="password"
-              name="password"
-            />
+            <LoginFormFieldInputPassword>
+              <LoginFormFieldInput
+                onChange={onFormInputChange}
+                value={formData.password}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+              />
+              <LoginFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                {showPassword ? <HiEyeOff /> : <HiEye />}
+              </LoginFormFieldInputShowPasswordButton>
+            </LoginFormFieldInputPassword>
           </LoginFormField>
         </LoginFormFields>
         <LoginFormButtons>

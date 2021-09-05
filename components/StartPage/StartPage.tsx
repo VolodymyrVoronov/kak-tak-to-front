@@ -53,10 +53,10 @@ const StartPage = (): React.ReactElement => {
           </StartPageRightSideLoginLink>
         </StartPageRightSideLoginBox>
         <StartPageRightSideLinkToPosts>
-          <Link href="/posts">
-            <a>Хочу просто почитать посты</a>
-          </Link>
           <HiEye />
+          <Link href="/posts">
+            <a>Хочу просто посмотреть посты</a>
+          </Link>
         </StartPageRightSideLinkToPosts>
       </StartPageRightSide>
     </StartPageContainer>

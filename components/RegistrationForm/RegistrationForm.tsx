@@ -1,6 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 
+import { HiEye, HiEyeOff } from "react-icons/hi";
+
 import {
   RegistrationFormContainer,
   RegistrationFormBody,
@@ -8,6 +10,8 @@ import {
   RegistrationFormFields,
   RegistrationFormField,
   RegistrationFormFieldLabel,
+  RegistrationFormFieldInputPassword,
+  RegistrationFormFieldInputShowPasswordButton,
   RegistrationFormFieldInput,
   RegistrationFormButtons,
   RegistrationFormButtonLogin,
@@ -31,6 +35,8 @@ const RegistrationForm = (): React.ReactElement => {
   const router = useRouter();
 
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
+  const loginInput = React.useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const onFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((formData) => ({
@@ -40,16 +46,27 @@ const RegistrationForm = (): React.ReactElement => {
   };
 
   const onRegistrationButtoCick = () => {
-    console.log(`Login`);
+    console.log(`Registration`);
   };
 
   const onClearButtonClick = () => {
     setFormData(initialFormState);
+    setShowPassword(false);
   };
 
   const onBackButtonClick = () => {
     router.push("/");
   };
+
+  const onShowPasswordClick = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
+
+  React.useEffect(() => {
+    if (loginInput && loginInput.current) {
+      loginInput.current.focus();
+    }
+  }, []);
 
   const isRegistrationButtonDisabled =
     formData.login.length === 0 || formData.password.length === 0 || formData.confirmPassword.length === 0;
@@ -70,29 +87,40 @@ const RegistrationForm = (): React.ReactElement => {
               type="text"
               id="login"
               name="login"
+              ref={loginInput}
             />
           </RegistrationFormField>
 
           <RegistrationFormField>
             <RegistrationFormFieldLabel htmlFor="password">Пароль:</RegistrationFormFieldLabel>
-            <RegistrationFormFieldInput
-              onChange={onFormInputChange}
-              value={formData.password}
-              type="password"
-              id="password"
-              name="password"
-            />
+            <RegistrationFormFieldInputPassword>
+              <RegistrationFormFieldInput
+                onChange={onFormInputChange}
+                value={formData.password}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+              />
+              <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                {showPassword ? <HiEyeOff /> : <HiEye />}
+              </RegistrationFormFieldInputShowPasswordButton>
+            </RegistrationFormFieldInputPassword>
           </RegistrationFormField>
 
           <RegistrationFormField>
             <RegistrationFormFieldLabel htmlFor="confirmPassword">Подтвердите пароль:</RegistrationFormFieldLabel>
-            <RegistrationFormFieldInput
-              onChange={onFormInputChange}
-              value={formData.confirmPassword}
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-            />
+            <RegistrationFormFieldInputPassword>
+              <RegistrationFormFieldInput
+                onChange={onFormInputChange}
+                value={formData.confirmPassword}
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+              />
+              <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                {showPassword ? <HiEyeOff /> : <HiEye />}
+              </RegistrationFormFieldInputShowPasswordButton>
+            </RegistrationFormFieldInputPassword>
           </RegistrationFormField>
         </RegistrationFormFields>
         <RegistrationFormButtons>
