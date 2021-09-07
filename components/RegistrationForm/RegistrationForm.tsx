@@ -1,7 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { gql, useMutation } from "@apollo/client";
 
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import Loader from "react-loader-spinner";
 
 import {
   RegistrationFormContainer,
@@ -10,6 +12,7 @@ import {
   RegistrationFormFields,
   RegistrationFormField,
   RegistrationFormFieldLabel,
+  RegistrationFormFieldError,
   RegistrationFormFieldInputPassword,
   RegistrationFormFieldInputShowPasswordButton,
   RegistrationFormFieldInput,
@@ -19,17 +22,36 @@ import {
   RegistrationFormButtonBack,
 } from "./RegistrationForm.styled";
 
+import { colors } from "./../../styles/colorPalette";
+
 interface FormData {
-  login: string;
+  userLogin: string;
   password: string;
   confirmPassword: string;
 }
 
+interface Error {
+  userLoginLength?: string;
+  confirmPassword?: string;
+  userLogin?: string;
+}
+
 const initialFormState = {
-  login: "",
+  userLogin: "",
   password: "",
   confirmPassword: "",
 };
+
+const USER_REGISTRATION = gql`
+  mutation registration($userLogin: String!, $password: String!, $confirmPassword: String!) {
+    registration(registrationInput: { userLogin: $userLogin, password: $password, confirmPassword: $confirmPassword }) {
+      id
+      userLogin
+      createdAt
+      token
+    }
+  }
+`;
 
 const RegistrationForm = (): React.ReactElement => {
   const router = useRouter();
@@ -37,8 +59,20 @@ const RegistrationForm = (): React.ReactElement => {
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const loginInput = React.useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errors, setErrors] = React.useState<Error>({});
+
+  const [registerUser, { loading }] = useMutation(USER_REGISTRATION, {
+    update(_, { data: { registration: userData } }) {
+      console.log(userData);
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors[0].extensions?.errors);
+    },
+    variables: formData,
+  });
 
   const onFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({});
     setFormData((formData) => ({
       ...formData,
       [e.target.name]: e.target.value,
@@ -46,12 +80,13 @@ const RegistrationForm = (): React.ReactElement => {
   };
 
   const onRegistrationButtoCick = () => {
-    console.log(`Registration`);
+    registerUser();
   };
 
   const onClearButtonClick = () => {
     setFormData(initialFormState);
     setShowPassword(false);
+    setErrors({});
   };
 
   const onBackButtonClick = () => {
@@ -69,30 +104,34 @@ const RegistrationForm = (): React.ReactElement => {
   }, []);
 
   const isRegistrationButtonDisabled =
-    formData.login.length === 0 || formData.password.length === 0 || formData.confirmPassword.length === 0;
+    formData.userLogin.length === 0 || formData.password.length === 0 || formData.confirmPassword.length === 0;
 
   const isClearButtonDisabled =
-    formData.login.length === 0 && formData.password.length === 0 && formData.confirmPassword.length === 0;
+    formData.userLogin.length === 0 && formData.password.length === 0 && formData.confirmPassword.length === 0;
+
+  const isFormValid = Object.keys(errors).length === 0;
 
   return (
-    <RegistrationFormContainer>
+    <RegistrationFormContainer isValid={isFormValid}>
       <RegistrationFormBody>
         <RegistrationFormTitle>Регистрация</RegistrationFormTitle>
         <RegistrationFormFields>
           <RegistrationFormField>
-            <RegistrationFormFieldLabel htmlFor="login">Логин:</RegistrationFormFieldLabel>
+            <RegistrationFormFieldLabel htmlFor="userLogin">Логин:</RegistrationFormFieldLabel>
+            <RegistrationFormFieldError>{errors?.userLoginLength || errors?.userLogin}</RegistrationFormFieldError>
             <RegistrationFormFieldInput
               onChange={onFormInputChange}
-              value={formData.login}
+              value={formData.userLogin}
               type="text"
-              id="login"
-              name="login"
+              id="userLogin"
+              name="userLogin"
               ref={loginInput}
             />
           </RegistrationFormField>
 
           <RegistrationFormField>
             <RegistrationFormFieldLabel htmlFor="password">Пароль:</RegistrationFormFieldLabel>
+            <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
             <RegistrationFormFieldInputPassword>
               <RegistrationFormFieldInput
                 onChange={onFormInputChange}
@@ -109,6 +148,7 @@ const RegistrationForm = (): React.ReactElement => {
 
           <RegistrationFormField>
             <RegistrationFormFieldLabel htmlFor="confirmPassword">Подтвердите пароль:</RegistrationFormFieldLabel>
+            <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
             <RegistrationFormFieldInputPassword>
               <RegistrationFormFieldInput
                 onChange={onFormInputChange}
@@ -126,15 +166,23 @@ const RegistrationForm = (): React.ReactElement => {
         <RegistrationFormButtons>
           <RegistrationFormButtonLogin
             onClick={onRegistrationButtoCick}
-            disabled={isRegistrationButtonDisabled}
+            disabled={isRegistrationButtonDisabled || loading}
             type="button"
           >
-            Регистрация
+            {loading ? (
+              <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
+            ) : (
+              "Регистрация"
+            )}
           </RegistrationFormButtonLogin>
-          <RegistrationFormButtonClear onClick={onClearButtonClick} disabled={isClearButtonDisabled} type="button">
+          <RegistrationFormButtonClear
+            onClick={onClearButtonClick}
+            disabled={isClearButtonDisabled || loading}
+            type="button"
+          >
             Очистить
           </RegistrationFormButtonClear>
-          <RegistrationFormButtonBack onClick={onBackButtonClick} type="button">
+          <RegistrationFormButtonBack onClick={onBackButtonClick} type="button" disabled={loading}>
             Назад
           </RegistrationFormButtonBack>
         </RegistrationFormButtons>

@@ -1,8 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { colors } from "../../styles/colorPalette";
 
-const RegistrationFormContainer = styled.div`
+interface RegistrationFormContainerProps {
+  isValid: boolean;
+}
+
+const RegistrationFormContainer = styled.div<RegistrationFormContainerProps>`
   display: grid;
   grid-auto-flow: row;
   grid-auto-rows: 100%;
@@ -14,9 +18,10 @@ const RegistrationFormContainer = styled.div`
 
   padding-left: 5rem;
 
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 50%, rgba(26, 148, 197, 0.4598214285714286) 100%);
-
-  /* background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(229,107,111,0.4962359943977591) 100%); */
+  background: ${(props) =>
+    props.isValid
+      ? css`linear-gradient(90deg, rgba(255, 255, 255, 1) 50%, rgba(26, 148, 197, 0.4598214285714286) 100%);`
+      : css`linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(229,107,111,0.4962359943977591) 100%);`};
 `;
 
 const RegistrationFormBody = styled.form`
@@ -54,6 +59,16 @@ const RegistrationFormFieldLabel = styled.label`
   font-size: 26px;
   line-height: 30px;
   font-weight: 500;
+`;
+
+const RegistrationFormFieldError = styled.p`
+  display: flex;
+
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 500;
+
+  color: ${colors.primaryRed};
 `;
 
 const RegistrationFormFieldInputPassword = styled.div`
@@ -159,7 +174,7 @@ const Button = styled.button`
   &:disabled {
     cursor: default;
 
-    border: 1px solid ${colors.blackOpacity01};
+    border: 1px solid ${colors.blackOpacity03};
 
     background-color: transparent;
   }
@@ -183,6 +198,7 @@ export {
   RegistrationFormFields,
   RegistrationFormField,
   RegistrationFormFieldLabel,
+  RegistrationFormFieldError,
   RegistrationFormFieldInputPassword,
   RegistrationFormFieldInputShowPasswordButton,
   RegistrationFormFieldInput,
