@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import RegistrationForm from "../components/RegistrationForm/RegistrationForm";
 
-const Signin: NextPage = () => {
+const Registration: NextPage = () => {
   return (
     <>
       <Head>
@@ -14,4 +14,4 @@ const Signin: NextPage = () => {
   );
 };
 
-export default Signin;
+export default Registration;

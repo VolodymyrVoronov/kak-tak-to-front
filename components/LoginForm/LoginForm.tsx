@@ -1,7 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { gql, useMutation } from "@apollo/client";
 
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import Loader from "react-loader-spinner";
 
 import {
   LoginFormContainer,
@@ -10,6 +12,7 @@ import {
   LoginFormFields,
   LoginFormField,
   LoginFormFieldLabel,
+  LoginFormFieldError,
   LoginFormFieldInputPassword,
   LoginFormFieldInputShowPasswordButton,
   LoginFormFieldInput,
@@ -19,15 +22,33 @@ import {
   LoginFormButtonBack,
 } from "./LoginForm.styled";
 
+import { colors } from "./../../styles/colorPalette";
+
 interface FormData {
-  login: string;
+  userLogin: string;
   password: string;
 }
 
+interface Error {
+  userNotFound?: string;
+  wrongCredentials?: string;
+}
+
 const initialFormState = {
-  login: "",
+  userLogin: "",
   password: "",
 };
+
+const USER_LOGIN = gql`
+  mutation login($userLogin: String!, $password: String!) {
+    login(userLogin: $userLogin, password: $password) {
+      id
+      userLogin
+      createdAt
+      token
+    }
+  }
+`;
 
 const LoginForm = (): React.ReactElement => {
   const router = useRouter();
@@ -35,8 +56,21 @@ const LoginForm = (): React.ReactElement => {
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const loginInput = React.useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errors, setErrors] = React.useState<Error>({});
+
+  const [loginUser, { loading }] = useMutation(USER_LOGIN, {
+    update(_, { data: { login: userData } }) {
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+      router.replace("/posts");
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors[0].extensions?.errors);
+    },
+    variables: formData,
+  });
 
   const onFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({});
     setFormData((formData) => ({
       ...formData,
       [e.target.name]: e.target.value,
@@ -44,12 +78,13 @@ const LoginForm = (): React.ReactElement => {
   };
 
   const onLoginButtoCick = () => {
-    console.log(`Login`);
+    loginUser();
   };
 
   const onClearButtonClick = () => {
     setFormData(initialFormState);
     setShowPassword(false);
+    setErrors({});
   };
 
   const onBackButtonClick = () => {
@@ -66,28 +101,33 @@ const LoginForm = (): React.ReactElement => {
     }
   }, []);
 
-  const isLoginButtonDisabled = formData.login.length === 0 || formData.password.length === 0;
-  const isClearButtonDisabled = formData.login.length === 0 && formData.password.length === 0;
+  const isLoginButtonDisabled = formData.userLogin.length === 0 || formData.password.length === 0;
+
+  const isClearButtonDisabled = formData.userLogin.length === 0 && formData.password.length === 0;
+
+  const isFormValid = Object.keys(errors).length === 0;
 
   return (
-    <LoginFormContainer>
+    <LoginFormContainer isValid={isFormValid}>
       <LoginFormBody>
         <LoginFormTitle>Авторизация</LoginFormTitle>
         <LoginFormFields>
           <LoginFormField>
-            <LoginFormFieldLabel htmlFor="login">Логин:</LoginFormFieldLabel>
+            <LoginFormFieldLabel htmlFor="userLogin">Логин:</LoginFormFieldLabel>
+            <LoginFormFieldError>{errors?.userNotFound}</LoginFormFieldError>
             <LoginFormFieldInput
               onChange={onFormInputChange}
-              value={formData.login}
+              value={formData.userLogin}
               type="text"
-              id="login"
-              name="login"
+              id="userLogin"
+              name="userLogin"
               ref={loginInput}
             />
           </LoginFormField>
 
           <LoginFormField>
             <LoginFormFieldLabel htmlFor="password">Пароль:</LoginFormFieldLabel>
+            <LoginFormFieldError>{errors?.wrongCredentials}</LoginFormFieldError>
             <LoginFormFieldInputPassword>
               <LoginFormFieldInput
                 onChange={onFormInputChange}
@@ -103,13 +143,17 @@ const LoginForm = (): React.ReactElement => {
           </LoginFormField>
         </LoginFormFields>
         <LoginFormButtons>
-          <LoginFormButtonLogin onClick={onLoginButtoCick} disabled={isLoginButtonDisabled} type="button">
-            Вход
+          <LoginFormButtonLogin onClick={onLoginButtoCick} disabled={isLoginButtonDisabled || loading} type="button">
+            {loading ? (
+              <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
+            ) : (
+              "Вход"
+            )}
           </LoginFormButtonLogin>
-          <LoginFormButtonClear onClick={onClearButtonClick} disabled={isClearButtonDisabled} type="button">
+          <LoginFormButtonClear onClick={onClearButtonClick} disabled={isClearButtonDisabled || loading} type="button">
             Очистить
           </LoginFormButtonClear>
-          <LoginFormButtonBack onClick={onBackButtonClick} type="button">
+          <LoginFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
             Назад
           </LoginFormButtonBack>
         </LoginFormButtons>

@@ -63,7 +63,8 @@ const RegistrationForm = (): React.ReactElement => {
 
   const [registerUser, { loading }] = useMutation(USER_REGISTRATION, {
     update(_, { data: { registration: userData } }) {
-      console.log(userData);
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+      router.replace("/posts");
     },
     onError({ graphQLErrors }) {
       setErrors(graphQLErrors[0].extensions?.errors);
@@ -182,7 +183,7 @@ const RegistrationForm = (): React.ReactElement => {
           >
             Очистить
           </RegistrationFormButtonClear>
-          <RegistrationFormButtonBack onClick={onBackButtonClick} type="button" disabled={loading}>
+          <RegistrationFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
             Назад
           </RegistrationFormButtonBack>
         </RegistrationFormButtons>
