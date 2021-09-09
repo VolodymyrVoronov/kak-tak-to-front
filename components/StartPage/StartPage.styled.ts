@@ -15,7 +15,7 @@ const StartPageLeftSide = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: ${colors.primaryRed};
+  background-color: ${colors.primaryBlue};
 `;
 
 const StartPageLeftSideSmile = styled.span`
@@ -40,7 +40,7 @@ const StartPageRightSideSmallSmile = styled.span`
   font-size: 60px;
   line-height: 60px;
 
-  color: ${colors.primaryRed};
+  color: ${colors.primaryBlue};
 `;
 
 const StartPageRightSideTitle = styled.h1`
