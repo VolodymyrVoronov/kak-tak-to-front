@@ -56,8 +56,9 @@ const USER_REGISTRATION = gql`
 const RegistrationForm = (): React.ReactElement => {
   const router = useRouter();
 
-  const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const loginInput = React.useRef<HTMLInputElement>(null);
+
+  const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const [showPassword, setShowPassword] = React.useState(false);
   const [errors, setErrors] = React.useState<Error>({});
 

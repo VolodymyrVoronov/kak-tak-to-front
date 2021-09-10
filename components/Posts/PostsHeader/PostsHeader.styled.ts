@@ -46,18 +46,20 @@ const PostsHeaderUserName = styled.p`
   color: ${colors.white};
 `;
 
-const PostsHeaderAvatar = styled.span`
-  display: flex;
-  align-items: center;
+// const PostsHeaderAvatar = styled.span`
+//   display: flex;
+//   align-items: center;
 
-  font-size: 49px;
-  line-height: 49px;
+//   font-size: 49px;
+//   line-height: 49px;
 
-  color: ${colors.white};
-`;
+//   color: ${colors.white};
+// `;
 
 const PostsHeaderButtonBox = styled.div`
   display: flex;
+
+  margin-left: auto;
 `;
 
 interface PostsHeaderButtonPorps {
@@ -69,7 +71,6 @@ const PostsHeaderButton = styled.button<PostsHeaderButtonPorps>`
   justify-content: ${(props) => (props.isUser ? css`flex-end` : css`center`)};
   align-items: center;
 
-  /* padding: 10px 25px; */
   width: 50px;
   height: 50px;
 
@@ -99,7 +100,7 @@ export {
   PostsHeaderUser,
   PostsHeaderUserAvatar,
   PostsHeaderUserName,
-  PostsHeaderAvatar,
+  // PostsHeaderAvatar,
   PostsHeaderButtonBox,
   PostsHeaderButton,
 };

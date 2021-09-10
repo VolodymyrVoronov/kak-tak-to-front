@@ -10,7 +10,7 @@ import {
   PostsHeaderUser,
   PostsHeaderUserAvatar,
   PostsHeaderUserName,
-  PostsHeaderAvatar,
+  // PostsHeaderAvatar,
   PostsHeaderButtonBox,
   PostsHeaderButton,
 } from "./PostsHeader.styled";
@@ -44,9 +44,9 @@ const PostsHeader = (): React.ReactElement => {
         </PostsHeaderUser>
       )}
 
-      <PostsHeaderAvatar>
+      {/* <PostsHeaderAvatar>
         <HiEmojiSad />
-      </PostsHeaderAvatar>
+      </PostsHeaderAvatar> */}
       <PostsHeaderButtonBox>
         <PostsHeaderButton
           isUser={userName ? true : false}
