@@ -183,6 +183,7 @@ const Button = styled.button`
 const RegistrationFormButtonLogin = styled(Button)`
   grid-area: a;
 `;
+
 const RegistrationFormButtonClear = styled(Button)`
   grid-area: b;
 `;

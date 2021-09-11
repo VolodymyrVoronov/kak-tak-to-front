@@ -176,6 +176,7 @@ const Button = styled.button`
 const PostsFormButtonClear = styled(Button)`
   grid-area: a;
 `;
+
 const PostsFormButtonSend = styled(Button)`
   grid-area: b;
 `;
