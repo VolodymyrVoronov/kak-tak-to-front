@@ -128,6 +128,58 @@ const PostsFormBodyPostLength = styled.p<PostsFormBodyPostLengthProps>`
   transition: 500ms ease;
 `;
 
+const PostsFormButtons = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr auto;
+  grid-gap: 1rem;
+
+  grid-template-areas: "a a b b";
+
+  margin-top: 25px;
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+
+  padding: 10px 0;
+
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+
+  border: 1px solid ${colors.blackOpacity04};
+  border-radius: 50px;
+
+  background-color: transparent;
+
+  transition: 250ms ease;
+
+  &:hover {
+    cursor: pointer;
+
+    background-color: ${colors.blackOpacity01};
+
+    transition: 250ms ease;
+  }
+
+  &:disabled {
+    cursor: default;
+
+    border: 1px solid ${colors.blackOpacity03};
+
+    background-color: transparent;
+  }
+`;
+
+const PostsFormButtonClear = styled(Button)`
+  grid-area: a;
+`;
+const PostsFormButtonSend = styled(Button)`
+  grid-area: b;
+`;
+
 export {
   PostsFormContainer,
   PostsFormTitle,
@@ -136,4 +188,7 @@ export {
   PostsFormBodyProgressBox,
   PostsFormBodyProgress,
   PostsFormBodyPostLength,
+  PostsFormButtons,
+  PostsFormButtonSend,
+  PostsFormButtonClear,
 };
