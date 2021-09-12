@@ -1,16 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import { getLetterForAvatar } from "../../../helpers/getLetterForAvatar";
+import { HiOutlineLogout, HiOutlineHome } from "react-icons/hi";
 
-import { HiEmojiSad, HiOutlineLogout, HiOutlineHome } from "react-icons/hi";
+import { getLetterForAvatar } from "../../../helpers/getLetterForAvatar";
 
 import {
   PostsHeaderContainer,
   PostsHeaderUser,
   PostsHeaderUserAvatar,
   PostsHeaderUserName,
-  // PostsHeaderAvatar,
   PostsHeaderButtonBox,
   PostsHeaderButton,
 } from "./PostsHeader.styled";
@@ -44,9 +43,6 @@ const PostsHeader = (): React.ReactElement => {
         </PostsHeaderUser>
       )}
 
-      {/* <PostsHeaderAvatar>
-        <HiEmojiSad />
-      </PostsHeaderAvatar> */}
       <PostsHeaderButtonBox>
         <PostsHeaderButton
           isUser={userName ? true : false}

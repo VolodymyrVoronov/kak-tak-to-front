@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { Button } from "../../../styles/Button/Button.styled";
+
 import { colors } from "../../../styles/colorPalette";
 
 const PostsFormContainer = styled.div`
@@ -137,40 +139,6 @@ const PostsFormButtons = styled.div`
   grid-template-areas: "a a b b";
 
   margin-top: 25px;
-`;
-
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-
-  padding: 10px 0;
-
-  font-size: 22px;
-  line-height: 26px;
-  font-weight: 500;
-
-  border: 1px solid ${colors.blackOpacity04};
-  border-radius: 50px;
-
-  background-color: transparent;
-
-  transition: 250ms ease;
-
-  &:hover {
-    cursor: pointer;
-
-    background-color: ${colors.blackOpacity01};
-
-    transition: 250ms ease;
-  }
-
-  &:disabled {
-    cursor: default;
-
-    border: 1px solid ${colors.blackOpacity03};
-
-    background-color: transparent;
-  }
 `;
 
 const PostsFormButtonClear = styled(Button)`

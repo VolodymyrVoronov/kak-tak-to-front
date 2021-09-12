@@ -11,14 +11,14 @@ const PostsContent = styled.div`
   display: grid;
   grid-template-columns: 30% 70%;
 
-  height: 100vh;
+  /* height: 100vh; */
 `;
 
 const PostsItems = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-flow: row;
-  grid-gap: 1rem;
+  grid-gap: 3rem;
 
   padding: 25px;
 `;

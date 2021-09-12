@@ -5,6 +5,7 @@ import PostsHeader from "./PostsHeader/PostsHeader";
 import PostsForm from "./PostsForm/PostsForm";
 import Post from "./Post/Post";
 import NoUserIsLogged from "./../NoUserIsLogged/NoUserIsLogged";
+import ProgressLoader from "./../common/ProgressLoader/ProgressLoader";
 
 import { FETCH_POSTS_QUERY } from "../../utils/graphql";
 
@@ -26,7 +27,7 @@ const Posts = (): React.ReactElement => {
     }
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <ProgressLoader />;
   if (error) return <p>Error {error}</p>;
 
   const { getPosts } = data;

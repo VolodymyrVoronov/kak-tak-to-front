@@ -46,16 +46,6 @@ const PostsHeaderUserName = styled.p`
   color: ${colors.white};
 `;
 
-// const PostsHeaderAvatar = styled.span`
-//   display: flex;
-//   align-items: center;
-
-//   font-size: 49px;
-//   line-height: 49px;
-
-//   color: ${colors.white};
-// `;
-
 const PostsHeaderButtonBox = styled.div`
   display: flex;
 
@@ -100,7 +90,6 @@ export {
   PostsHeaderUser,
   PostsHeaderUserAvatar,
   PostsHeaderUserName,
-  // PostsHeaderAvatar,
   PostsHeaderButtonBox,
   PostsHeaderButton,
 };

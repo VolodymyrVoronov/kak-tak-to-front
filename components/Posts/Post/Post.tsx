@@ -1,6 +1,19 @@
 import React from "react";
+import Link from "next/link";
 
-import { PostContainer } from "./Post.styled";
+import { showTimePostWasWritten } from "../../../helpers/showTimePostWasWritten";
+
+import { getLetterForAvatar } from "../../../helpers/getLetterForAvatar";
+
+import {
+  PostContainer,
+  PostHeader,
+  PostHeaderAvatar,
+  PostHeaderUserLogin,
+  PostCreatedAt,
+  PostBody,
+  PostButtons
+} from "./Post.styled";
 
 interface PostProps {
   id: string;
@@ -21,7 +34,22 @@ const Post = ({
   commentCount,
   likes,
 }: PostProps): React.ReactElement => {
-  return <PostContainer>Post</PostContainer>;
+  return (
+    <PostContainer>
+      <PostHeader>
+        <PostHeaderAvatar>{getLetterForAvatar(userLogin)}</PostHeaderAvatar>
+        <PostHeaderUserLogin>{userLogin}</PostHeaderUserLogin>
+      </PostHeader>
+      <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
+      <PostBody>{postText}</PostBody>
+      <PostButtons>1</PostButtons>
+    </PostContainer>
+  );
 };
 
 export default Post;
+
+
+{/* <p>
+<Link href={`posts/post/${id}`}>Больше</Link>
+</p> */}
