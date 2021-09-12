@@ -1,5 +1,7 @@
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { HiEmojiSad, HiOutlineAnnotation, HiOutlineTrash } from "react-icons/hi";
 
 import { showTimePostWasWritten } from "../../../helpers/showTimePostWasWritten";
 
@@ -12,7 +14,12 @@ import {
   PostHeaderUserLogin,
   PostCreatedAt,
   PostBody,
-  PostButtons
+  PostButtons,
+  PostButtonLike,
+  PostButtonLikeIcon,
+  PostButtonComments,
+  PostButtonCommentsIcon,
+  PostButtonDelete,
 } from "./Post.styled";
 
 interface PostProps {
@@ -34,6 +41,20 @@ const Post = ({
   commentCount,
   likes,
 }: PostProps): React.ReactElement => {
+  const router = useRouter();
+
+  const user = JSON.parse(localStorage.getItem("userInfo") || "{}").userLogin as string;
+
+  console.log(user);
+
+  const onLikeButtonClick = () => {};
+
+  const onCommentsButtonClick = () => {
+    router.push(`/posts/post/${id}`);
+  };
+
+  const onDeleteButtonClick = () => {};
+
   return (
     <PostContainer>
       <PostHeader>
@@ -42,14 +63,27 @@ const Post = ({
       </PostHeader>
       <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
       <PostBody>{postText}</PostBody>
-      <PostButtons>1</PostButtons>
+      <PostButtons>
+        <PostButtonLike disabled={!user} type="button">
+          <PostButtonLikeIcon>
+            <HiEmojiSad />
+          </PostButtonLikeIcon>
+          {likeCount}
+        </PostButtonLike>
+
+        <PostButtonComments onClick={onCommentsButtonClick} type="button">
+          <PostButtonCommentsIcon>
+            <HiOutlineAnnotation />
+          </PostButtonCommentsIcon>
+          {commentCount}
+        </PostButtonComments>
+
+        <PostButtonDelete disabled={user !== userLogin || !user} type="button">
+          <HiOutlineTrash />
+        </PostButtonDelete>
+      </PostButtons>
     </PostContainer>
   );
 };
 
 export default Post;
-
-
-{/* <p>
-<Link href={`posts/post/${id}`}>Больше</Link>
-</p> */}

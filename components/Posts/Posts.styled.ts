@@ -10,8 +10,6 @@ const PostsContainer = styled.div`
 const PostsContent = styled.div`
   display: grid;
   grid-template-columns: 30% 70%;
-
-  /* height: 100vh; */
 `;
 
 const PostsItems = styled.div`
@@ -21,6 +19,9 @@ const PostsItems = styled.div`
   grid-gap: 3rem;
 
   padding: 25px;
+
+  height: 90vh;
+  overflow-y: scroll;
 `;
 
 export { PostsContainer, PostsContent, PostsItems };
