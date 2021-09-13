@@ -6,7 +6,7 @@ const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* min-height: 350px; */
+  height: 450px;
 
   border-bottom: 2px solid ${colors.primaryBlue};
 `;

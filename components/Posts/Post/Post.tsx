@@ -1,11 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { gql, useMutation } from "@apollo/client";
 
 import { HiEmojiSad, HiOutlineAnnotation, HiOutlineTrash } from "react-icons/hi";
 
 import { showTimePostWasWritten } from "../../../helpers/showTimePostWasWritten";
 
 import { getLetterForAvatar } from "../../../helpers/getLetterForAvatar";
+
+import { FETCH_POSTS_QUERY } from "../../../utils/graphql";
 
 import {
   PostContainer,
@@ -32,6 +35,33 @@ interface PostProps {
   likes: string[];
 }
 
+interface DeletePostMutation {
+  getPosts: {
+    id: string;
+    postText: string;
+    createdAt: string;
+    userLogin: string;
+    likeCount: number;
+    likes: {
+      userLogin: string;
+    };
+    commentCount: number;
+    comments: {
+      id: string;
+      userLogin: string;
+      createdAt: string;
+      commentText: string;
+    };
+    filter: any;
+  };
+}
+
+const DELETE_POST = gql`
+  mutation deletePost($id: ID!) {
+    deletePost(id: $id)
+  }
+`;
+
 const Post = ({
   id,
   postText,
@@ -45,7 +75,25 @@ const Post = ({
 
   const user = JSON.parse(localStorage.getItem("userInfo") || "{}").userLogin as string;
 
-  console.log(user);
+  const [deletePost] = useMutation(DELETE_POST, {
+    update(proxy) {
+      const data = proxy.readQuery<DeletePostMutation>({
+        query: FETCH_POSTS_QUERY,
+      });
+
+      console.log(data);
+
+      proxy.writeQuery({
+        query: FETCH_POSTS_QUERY,
+        data: {
+          getPosts: data?.getPosts.filter((post: { id: string }) => post.id !== id),
+        },
+      });
+    },
+    variables: {
+      id,
+    },
+  });
 
   const onLikeButtonClick = () => {};
 
@@ -53,7 +101,9 @@ const Post = ({
     router.push(`/posts/post/${id}`);
   };
 
-  const onDeleteButtonClick = () => {};
+  const onDeleteButtonClick = () => {
+    deletePost();
+  };
 
   return (
     <PostContainer>
@@ -78,7 +128,7 @@ const Post = ({
           {commentCount}
         </PostButtonComments>
 
-        <PostButtonDelete disabled={user !== userLogin || !user} type="button">
+        <PostButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user} type="button">
           <HiOutlineTrash />
         </PostButtonDelete>
       </PostButtons>

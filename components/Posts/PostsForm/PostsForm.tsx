@@ -4,7 +4,7 @@ import Loader from "react-loader-spinner";
 
 import { MAX_AMOUNT_OF_POST_LETTER } from "../../../consts/consts";
 
-import { chgeckIfLimitReached } from "../../../helpers/chgeckIfLimitReached";
+import { checkIfLimitReached } from "../../../helpers/checkIfLimitReached";
 import { countAmountOfLetters } from "../../../helpers/countAmountOfLetters";
 
 import { FETCH_POSTS_QUERY } from "../../../utils/graphql";
@@ -114,7 +114,7 @@ const PostsForm = (): React.ReactElement => {
 
   const postLetterLimit = countAmountOfLetters(formData.postText);
 
-  const isLimitReached = chgeckIfLimitReached(formData.postText);
+  const isLimitReached = checkIfLimitReached(formData.postText);
 
   const postLength = formData.postText.length;
 
