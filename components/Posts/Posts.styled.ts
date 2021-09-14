@@ -20,7 +20,7 @@ const PostsItems = styled.div`
 
   padding: 25px;
 
-  height: 90vh;
+  height: 91.8vh;
   overflow-y: scroll;
 `;
 

@@ -42,7 +42,7 @@ const initialFormState = {
   confirmPassword: "",
 };
 
-const USER_REGISTRATION = gql`
+const USER_REGISTRATION_MUTATION = gql`
   mutation registration($userLogin: String!, $password: String!, $confirmPassword: String!) {
     registration(registrationInput: { userLogin: $userLogin, password: $password, confirmPassword: $confirmPassword }) {
       id
@@ -62,7 +62,7 @@ const RegistrationForm = (): React.ReactElement => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [errors, setErrors] = React.useState<Error>({});
 
-  const [registerUser, { loading }] = useMutation(USER_REGISTRATION, {
+  const [registerUser, { loading }] = useMutation(USER_REGISTRATION_MUTATION, {
     update(_, { data: { registration: userData } }) {
       localStorage.setItem("userInfo", JSON.stringify(userData));
       router.replace("/posts");

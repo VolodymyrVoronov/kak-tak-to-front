@@ -28,25 +28,6 @@ interface FormData {
   postText: string;
 }
 
-// interface Posts {
-//   getPosts: () => void;
-//   id: string;
-//   postText: string;
-//   createdAt: string;
-//   username: string;
-//   likeCount: string;
-//   likes: {
-//     username: string;
-//   };
-//   commentCount: string;
-//   comments: {
-//     id: string;
-//     username: string;
-//     createdAt: string;
-//     commentText: string;
-//   };
-// }
-
 const initialFormState = {
   postText: "",
 };
@@ -78,15 +59,18 @@ const CREATE_POST_MUTATION = gql`
 const PostsForm = (): React.ReactElement => {
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
 
-  const [createPost, { error, loading }] = useMutation(CREATE_POST_MUTATION, {
+  const [createPost, { loading }] = useMutation(CREATE_POST_MUTATION, {
     update(proxy, result) {
-      const data = proxy.readQuery<any>({
+      const data = proxy.readQuery<any | null>({
         query: FETCH_POSTS_QUERY,
       });
 
       const newPost = result.data.createPost;
 
-      proxy.writeQuery({ query: FETCH_POSTS_QUERY, data: { getPosts: [newPost, ...data.getPosts] } });
+      proxy.writeQuery({
+        query: FETCH_POSTS_QUERY,
+        data: { getPosts: [newPost, ...data.getPosts] },
+      });
 
       formData.postText = "";
     },
@@ -137,11 +121,7 @@ const PostsForm = (): React.ReactElement => {
         </PostsFormBodyProgressBox>
       </PostsFormBody>
       <PostsFormButtons>
-        <PostsFormButtonClear
-          onClick={onClearButtonClick}
-          type="button"
-          disabled={isLimitReached || postLength <= 0 || loading}
-        >
+        <PostsFormButtonClear onClick={onClearButtonClick} type="button" disabled={postLength <= 0 || loading}>
           Очистить
         </PostsFormButtonClear>
         <PostsFormButtonSend
@@ -160,4 +140,4 @@ const PostsForm = (): React.ReactElement => {
   );
 };
 
-export default PostsForm;
+export default React.memo(PostsForm);

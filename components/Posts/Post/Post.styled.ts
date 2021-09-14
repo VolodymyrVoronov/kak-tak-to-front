@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { colors } from "../../../styles/colorPalette";
 
@@ -8,7 +8,11 @@ const PostContainer = styled.div`
 
   height: 450px;
 
-  border-bottom: 2px solid ${colors.primaryBlue};
+  /* border-bottom: 2px solid ${colors.primaryBlue}; */
+
+  background-color: #f1f1f1;
+
+  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
 `;
 
 const PostHeader = styled.div`
@@ -16,7 +20,7 @@ const PostHeader = styled.div`
   flex-direction: row;
   align-items: center;
 
-  padding-bottom: 10px;
+  padding: 10px;
 
   border-bottom: 1px solid ${colors.primaryBlue};
 `;
@@ -53,7 +57,7 @@ const PostHeaderUserLogin = styled.p`
 const PostCreatedAt = styled.p`
   display: flex;
 
-  padding: 5px 0;
+  padding: 5px 10px;
 
   font-size: 16px;
   line-height: 20px;
@@ -68,7 +72,7 @@ const PostBody = styled.p`
 
   min-height: 200px;
 
-  padding: 5px 0;
+  padding: 5px 10px;
 
   font-size: 18px;
   line-height: 22px;
@@ -76,6 +80,11 @@ const PostBody = styled.p`
   color: ${colors.primaryLightBlack};
 
   border-bottom: 1px solid ${colors.primaryBlue};
+`;
+
+const PostButtonsLoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const PostButtons = styled.div`
@@ -89,7 +98,11 @@ const PostButtons = styled.div`
   /* padding: 10px 0; */
 `;
 
-const PostButtonLike = styled.button`
+interface PostButtonLikeProps {
+  liked: boolean;
+}
+
+const PostButtonLike = styled.button<PostButtonLikeProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,6 +138,12 @@ const PostButtonLike = styled.button`
 
     background-color: transparent;
   }
+
+  ${(props) =>
+    props.liked &&
+    css`
+      color: ${colors.primaryRed};
+    `}
 `;
 
 const PostButtonLikeIcon = styled.span`
@@ -219,6 +238,7 @@ export {
   PostHeaderUserLogin,
   PostCreatedAt,
   PostBody,
+  PostButtonsLoaderContainer,
   PostButtons,
   PostButtonLike,
   PostButtonLikeIcon,

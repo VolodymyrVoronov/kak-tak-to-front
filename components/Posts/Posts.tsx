@@ -11,6 +11,11 @@ import { FETCH_POSTS_QUERY } from "../../utils/graphql";
 
 import { PostsContainer, PostsContent, PostsItems } from "./Posts.styled";
 
+interface Like {
+  id: string;
+  userLogin: string;
+}
+
 const Posts = (): React.ReactElement => {
   const { loading, data, error } = useQuery(FETCH_POSTS_QUERY);
 
@@ -46,7 +51,7 @@ const Posts = (): React.ReactElement => {
               userLogin: string;
               likeCount: number;
               commentCount: number;
-              likes: string[];
+              likes: Like[];
             }) => {
               const { id, postText, createdAt, userLogin, likeCount, commentCount, likes } = post;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
+import Loader from "react-loader-spinner";
 
 import { HiEmojiSad, HiOutlineAnnotation, HiOutlineTrash } from "react-icons/hi";
 
@@ -17,6 +18,7 @@ import {
   PostHeaderUserLogin,
   PostCreatedAt,
   PostBody,
+  PostButtonsLoaderContainer,
   PostButtons,
   PostButtonLike,
   PostButtonLikeIcon,
@@ -25,6 +27,13 @@ import {
   PostButtonDelete,
 } from "./Post.styled";
 
+import { colors } from "../../../styles/colorPalette";
+
+interface Like {
+  id: string;
+  userLogin: string;
+}
+
 interface PostProps {
   id: string;
   postText: string;
@@ -32,7 +41,7 @@ interface PostProps {
   userLogin: string;
   likeCount: number;
   commentCount: number;
-  likes: string[];
+  likes: Like[];
 }
 
 interface DeletePostMutation {
@@ -56,9 +65,22 @@ interface DeletePostMutation {
   };
 }
 
-const DELETE_POST = gql`
+const DELETE_POST_MUTATION = gql`
   mutation deletePost($id: ID!) {
     deletePost(id: $id)
+  }
+`;
+
+const LIKE_POST_MUTATION = gql`
+  mutation likePost($id: ID!) {
+    likePost(id: $id) {
+      id
+      likes {
+        id
+        userLogin
+      }
+      likeCount
+    }
   }
 `;
 
@@ -73,15 +95,15 @@ const Post = ({
 }: PostProps): React.ReactElement => {
   const router = useRouter();
 
+  const [liked, setLiked] = React.useState(false);
+
   const user = JSON.parse(localStorage.getItem("userInfo") || "{}").userLogin as string;
 
-  const [deletePost] = useMutation(DELETE_POST, {
+  const [deletePost] = useMutation(DELETE_POST_MUTATION, {
     update(proxy) {
       const data = proxy.readQuery<DeletePostMutation>({
         query: FETCH_POSTS_QUERY,
       });
-
-      console.log(data);
 
       proxy.writeQuery({
         query: FETCH_POSTS_QUERY,
@@ -95,7 +117,21 @@ const Post = ({
     },
   });
 
-  const onLikeButtonClick = () => {};
+  const [likePost, { loading }] = useMutation(LIKE_POST_MUTATION, {
+    variables: {
+      id,
+    },
+  });
+
+  React.useEffect(() => {
+    if (user && likes.find((like) => like.userLogin === user)) {
+      setLiked(true);
+    } else setLiked(false);
+  }, [likes, user, userLogin]);
+
+  const onLikeButtonClick = () => {
+    likePost();
+  };
 
   const onCommentsButtonClick = () => {
     router.push(`/posts/post/${id}`);
@@ -113,27 +149,33 @@ const Post = ({
       </PostHeader>
       <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
       <PostBody>{postText}</PostBody>
-      <PostButtons>
-        <PostButtonLike disabled={!user} type="button">
-          <PostButtonLikeIcon>
-            <HiEmojiSad />
-          </PostButtonLikeIcon>
-          {likeCount}
-        </PostButtonLike>
+      {loading ? (
+        <PostButtonsLoaderContainer>
+          <Loader type="ThreeDots" color={colors.primaryBlue} height={42} width={50} timeout={0} />
+        </PostButtonsLoaderContainer>
+      ) : (
+        <PostButtons>
+          <PostButtonLike onClick={onLikeButtonClick} liked={liked} disabled={!user} type="button">
+            <PostButtonLikeIcon>
+              <HiEmojiSad />
+            </PostButtonLikeIcon>
+            {likeCount}
+          </PostButtonLike>
 
-        <PostButtonComments onClick={onCommentsButtonClick} type="button">
-          <PostButtonCommentsIcon>
-            <HiOutlineAnnotation />
-          </PostButtonCommentsIcon>
-          {commentCount}
-        </PostButtonComments>
+          <PostButtonComments onClick={onCommentsButtonClick} type="button">
+            <PostButtonCommentsIcon>
+              <HiOutlineAnnotation />
+            </PostButtonCommentsIcon>
+            {commentCount}
+          </PostButtonComments>
 
-        <PostButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user} type="button">
-          <HiOutlineTrash />
-        </PostButtonDelete>
-      </PostButtons>
+          <PostButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user} type="button">
+            <HiOutlineTrash />
+          </PostButtonDelete>
+        </PostButtons>
+      )}
     </PostContainer>
   );
 };
 
-export default Post;
+export default React.memo(Post);

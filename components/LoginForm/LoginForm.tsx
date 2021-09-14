@@ -39,7 +39,7 @@ const initialFormState = {
   password: "",
 };
 
-const USER_LOGIN = gql`
+const USER_LOGIN_MUTATION = gql`
   mutation login($userLogin: String!, $password: String!) {
     login(userLogin: $userLogin, password: $password) {
       id
@@ -54,12 +54,12 @@ const LoginForm = (): React.ReactElement => {
   const router = useRouter();
 
   const loginInput = React.useRef<HTMLInputElement>(null);
-  
+
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const [showPassword, setShowPassword] = React.useState(false);
   const [errors, setErrors] = React.useState<Error>({});
 
-  const [loginUser, { loading }] = useMutation(USER_LOGIN, {
+  const [loginUser, { loading }] = useMutation(USER_LOGIN_MUTATION, {
     update(_, { data: { login: userData } }) {
       localStorage.setItem("userInfo", JSON.stringify(userData));
       router.replace("/posts");
