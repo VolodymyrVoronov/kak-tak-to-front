@@ -1,35 +1,41 @@
 import styled, { css } from "styled-components";
 
-import { colors } from "../../../styles/colorPalette";
+import { colors } from "../../../../styles/colorPalette";
 
-const PostContainer = styled.div`
+const PostDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostDetailsBody = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: 450px;
+  width: 800px;
 
-  background-color: #f1f1f1;
+  margin: 0 auto;
+  padding: 0 25px;
 
-  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+  /* background-color: ${colors.blackOpacity01}; */
 `;
 
-const PostHeader = styled.div`
+const PostDetailsHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  padding: 10px;
+  padding: 15px 0;
 
   border-bottom: 1px solid ${colors.primaryBlue};
 `;
 
-const PostHeaderAvatar = styled.span`
+const PostDetailsHeaderAvatar = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
 
   margin-right: 15px;
 
@@ -43,71 +49,105 @@ const PostHeaderAvatar = styled.span`
   border-radius: 50%;
 `;
 
-const PostHeaderUserLogin = styled.p`
+const PostDetailsHeaderUserLogin = styled.p`
   display: flex;
 
-  font-size: 22px;
-  line-height: 26px;
+  font-size: 24px;
+  line-height: 28px;
   font-weight: 500;
   color: ${colors.primaryLightBlack};
 `;
 
-const PostCreatedAt = styled.p`
+const PostDetailsCreatedAt = styled.p`
   display: flex;
 
-  padding: 5px 10px;
+  padding: 10px 0;
 
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 300;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
   color: ${colors.primaryLightBlack};
 
   border-bottom: 1px solid ${colors.primaryBlue};
 `;
-const PostBody = styled.p`
+
+const PostDetailsText = styled.p`
   display: flex;
   flex-grow: 1;
 
   min-height: 200px;
 
-  padding: 5px 10px;
+  padding: 10px 0;
 
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 20px;
+  line-height: 24px;
   font-weight: 500;
   color: ${colors.primaryLightBlack};
 
   border-bottom: 1px solid ${colors.primaryBlue};
 `;
 
-const PostButtonsLoaderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const PostButtons = styled.div`
+const PostDetailsButtons = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr auto;
 
-  grid-template-areas: "a a b b c c";
+  grid-template-areas: "a b c";
 
-  /* margin-top: 25px; */
-  /* padding: 10px 0; */
+  border-bottom: 1px solid ${colors.primaryBlue};
 `;
 
-interface PostButtonLikeProps {
-  liked: boolean;
-}
-
-const PostButtonLike = styled.button<PostButtonLikeProps>`
+const PostDetailsButtonBack = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
 
   grid-area: a;
 
-  padding: 5px 0;
+  padding: 10px 0;
+
+  font-size: 35px;
+  line-height: 35px;
+  font-weight: 500;
+  color: ${colors.primaryBlue};
+
+  border: none;
+  border-left: 1px solid ${colors.primaryBlue};
+  border-right: 1px solid ${colors.primaryBlue};
+
+  background-color: transparent;
+
+  transition: 250ms ease;
+
+  &:hover {
+    cursor: pointer;
+
+    background-color: ${colors.blackOpacity01};
+
+    transition: 250ms ease;
+  }
+
+  &:disabled {
+    cursor: default;
+
+    color: ${colors.blackOpacity02};
+
+    background-color: transparent;
+  }
+`;
+
+interface PostDetailsButtonLike {
+  liked?: boolean;
+}
+
+const PostDetailsButtonLike = styled.button<PostDetailsButtonLike>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  grid-area: b;
+
+  padding: 10px 0;
 
   font-size: 18px;
   line-height: 22px;
@@ -144,7 +184,7 @@ const PostButtonLike = styled.button<PostButtonLikeProps>`
     `}
 `;
 
-const PostButtonLikeIcon = styled.span`
+const PostDetailsButtonLikeIcon = styled.span`
   display: flex;
 
   font-size: 35px;
@@ -153,53 +193,14 @@ const PostButtonLikeIcon = styled.span`
   margin-right: 10px;
 `;
 
-const PostButtonComments = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  grid-area: b;
-
-  padding: 5px 0;
-
-  font-size: 18px;
-  line-height: 22px;
-  font-weight: 500;
-  color: ${colors.primaryBlue};
-
-  border: none;
-  border-right: 1px solid ${colors.primaryBlue};
-
-  background-color: transparent;
-
-  transition: 250ms ease;
-
-  &:hover {
-    cursor: pointer;
-
-    background-color: ${colors.blackOpacity01};
-
-    transition: 250ms ease;
-  }
-`;
-
-const PostButtonCommentsIcon = styled.span`
-  display: flex;
-
-  font-size: 35px;
-  line-height: 35px;
-
-  margin-right: 10px;
-`;
-
-const PostButtonDelete = styled.button`
+const PostDetailsButtonDelete = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
 
   grid-area: c;
 
-  padding: 5px 0;
+  padding: 10px 0;
 
   font-size: 35px;
   line-height: 35px;
@@ -207,6 +208,7 @@ const PostButtonDelete = styled.button`
   color: ${colors.primaryBlue};
 
   border: none;
+  border-right: 1px solid ${colors.primaryBlue};
 
   background-color: transparent;
 
@@ -230,17 +232,16 @@ const PostButtonDelete = styled.button`
 `;
 
 export {
-  PostContainer,
-  PostHeader,
-  PostHeaderAvatar,
-  PostHeaderUserLogin,
-  PostCreatedAt,
-  PostBody,
-  PostButtonsLoaderContainer,
-  PostButtons,
-  PostButtonLike,
-  PostButtonLikeIcon,
-  PostButtonComments,
-  PostButtonCommentsIcon,
-  PostButtonDelete,
+  PostDetailsContainer,
+  PostDetailsBody,
+  PostDetailsHeader,
+  PostDetailsHeaderAvatar,
+  PostDetailsHeaderUserLogin,
+  PostDetailsCreatedAt,
+  PostDetailsText,
+  PostDetailsButtons,
+  PostDetailsButtonBack,
+  PostDetailsButtonLike,
+  PostDetailsButtonLikeIcon,
+  PostDetailsButtonDelete,
 };

@@ -67,9 +67,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         localStorage.removeItem("userInfo");
       }
 
-      if (decodedToken.exp * 1000 > Date.now()) {
-        router.push("/posts");
-      }
+      // if (decodedToken.exp * 1000 > Date.now()) {
+      //   router.push("/posts");
+      // }
     }
   }, []);
 
