@@ -1,7 +1,5 @@
-import { MAX_AMOUNT_OF_POST_LETTER } from "../consts/consts";
-
-export const checkIfLimitReached = (text: string): boolean | undefined => {
+export const checkIfLimitReached = (text: string, maxAmountOfLetters: number): boolean | undefined => {
   if (!text) return;
 
-  if (text.length > MAX_AMOUNT_OF_POST_LETTER) return true;
+  if (text.length > maxAmountOfLetters) return true;
 };

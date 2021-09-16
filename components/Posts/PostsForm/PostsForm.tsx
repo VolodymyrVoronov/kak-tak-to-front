@@ -2,7 +2,7 @@ import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import Loader from "react-loader-spinner";
 
-import { MAX_AMOUNT_OF_POST_LETTER } from "../../../consts/consts";
+import { MAX_AMOUNT_OF_POST_LETTERS } from "../../../consts/consts";
 
 import { checkIfLimitReached } from "../../../helpers/checkIfLimitReached";
 import { countAmountOfLetters } from "../../../helpers/countAmountOfLetters";
@@ -96,9 +96,9 @@ const PostsForm = (): React.ReactElement => {
     createPost();
   };
 
-  const postLetterLimit = countAmountOfLetters(formData.postText);
+  const postLetterLimit = countAmountOfLetters(formData.postText, MAX_AMOUNT_OF_POST_LETTERS);
 
-  const isLimitReached = checkIfLimitReached(formData.postText);
+  const isLimitReached = checkIfLimitReached(formData.postText, MAX_AMOUNT_OF_POST_LETTERS);
 
   const postLength = formData.postText.length;
 
@@ -116,7 +116,7 @@ const PostsForm = (): React.ReactElement => {
         <PostsFormBodyProgressBox>
           <PostsFormBodyProgress progress={postLetterLimit} limit={isLimitReached} />
           <PostsFormBodyPostLength limit={isLimitReached}>
-            {MAX_AMOUNT_OF_POST_LETTER} / {postLength}
+            {MAX_AMOUNT_OF_POST_LETTERS} / {postLength}
           </PostsFormBodyPostLength>
         </PostsFormBodyProgressBox>
       </PostsFormBody>

@@ -1,1 +1,2 @@
-export const MAX_AMOUNT_OF_POST_LETTER = 250;
+export const MAX_AMOUNT_OF_POST_LETTERS = 250;
+export const MAX_AMOUNT_OF_COMMET_LETTERS = 150;

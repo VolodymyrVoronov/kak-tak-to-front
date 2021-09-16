@@ -15,8 +15,6 @@ const PostDetailsBody = styled.div`
 
   margin: 0 auto;
   padding: 0 25px;
-
-  /* background-color: ${colors.blackOpacity01}; */
 `;
 
 const PostDetailsHeader = styled.div`
@@ -95,6 +93,16 @@ const PostDetailsButtons = styled.div`
   grid-template-areas: "a b c";
 
   border-bottom: 1px solid ${colors.primaryBlue};
+`;
+
+const PostDetailsButtonsLoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  height: 56px;
+
+  border: 1px solid ${colors.primaryBlue};
+  border-top: none;
 `;
 
 const PostDetailsButtonBack = styled.button`
@@ -240,6 +248,7 @@ export {
   PostDetailsCreatedAt,
   PostDetailsText,
   PostDetailsButtons,
+  PostDetailsButtonsLoaderContainer,
   PostDetailsButtonBack,
   PostDetailsButtonLike,
   PostDetailsButtonLikeIcon,

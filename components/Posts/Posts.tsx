@@ -41,7 +41,8 @@ const Posts = (): React.ReactElement => {
     <PostsContainer>
       <PostsHeader />
       <PostsContent>
-        {isUserLogged ? <PostsForm /> : <NoUserIsLogged />}
+        {!loading && <>{isUserLogged ? <PostsForm /> : <NoUserIsLogged />}</>}
+
         <PostsItems>
           {getPosts.map(
             (post: {

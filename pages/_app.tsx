@@ -1,7 +1,7 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import Head from "next/head";
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
@@ -57,8 +57,6 @@ const client = new ApolloClient({
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter();
-
   React.useEffect(() => {
     if (localStorage.getItem("userInfo")) {
       const decodedToken: { exp: number } = jwtDecode(JSON.parse(localStorage.getItem("userInfo") || "{}").token);
@@ -66,10 +64,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       if (decodedToken.exp * 1000 < Date.now()) {
         localStorage.removeItem("userInfo");
       }
-
-      // if (decodedToken.exp * 1000 > Date.now()) {
-      //   router.push("/posts");
-      // }
     }
   }, []);
 
