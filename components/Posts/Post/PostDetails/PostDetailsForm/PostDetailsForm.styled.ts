@@ -13,10 +13,21 @@ const PostDetailsFormContainer = styled.div`
 
 const PostDetailsFormTitle = styled.p`
   display: flex;
+  align-items: center;
 
   font-size: 16px;
   line-height: 20px;
   font-weight: 500;
+
+  transition: 250ms ease;
+
+  &:hover {
+    transition: 250ms ease;
+
+    color: ${colors.primaryBlue};
+
+    cursor: pointer;
+  }
 `;
 
 const PostDetailsFormBody = styled.form`

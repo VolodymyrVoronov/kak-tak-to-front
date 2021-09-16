@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 import Loader from "react-loader-spinner";
 
 import { gql, useMutation } from "@apollo/client";
@@ -156,39 +157,41 @@ const PostDetails = ({
   return (
     <PostDetailsContainer>
       <PostsHeader />
-      <PostDetailsBody>
-        <PostDetailsHeader>
-          <PostDetailsHeaderAvatar>{getLetterForAvatar(userLogin)}</PostDetailsHeaderAvatar>
-          <PostDetailsHeaderUserLogin>{userLogin}</PostDetailsHeaderUserLogin>
-        </PostDetailsHeader>
-        <PostDetailsCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostDetailsCreatedAt>
-        <PostDetailsText>{postText}</PostDetailsText>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <PostDetailsBody>
+          <PostDetailsHeader>
+            <PostDetailsHeaderAvatar>{getLetterForAvatar(userLogin)}</PostDetailsHeaderAvatar>
+            <PostDetailsHeaderUserLogin>{userLogin}</PostDetailsHeaderUserLogin>
+          </PostDetailsHeader>
+          <PostDetailsCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostDetailsCreatedAt>
+          <PostDetailsText>{postText}</PostDetailsText>
 
-        {loading ? (
-          <PostDetailsButtonsLoaderContainer>
-            <Loader type="ThreeDots" color={colors.primaryBlue} height={56} width={50} timeout={0} />
-          </PostDetailsButtonsLoaderContainer>
-        ) : (
-          <PostDetailsButtons>
-            <PostDetailsButtonBack onClick={onBackButtonClick} type="button">
-              <HiOutlineReply />
-            </PostDetailsButtonBack>
+          {loading ? (
+            <PostDetailsButtonsLoaderContainer>
+              <Loader type="ThreeDots" color={colors.primaryBlue} height={56} width={50} timeout={0} />
+            </PostDetailsButtonsLoaderContainer>
+          ) : (
+            <PostDetailsButtons>
+              <PostDetailsButtonBack onClick={onBackButtonClick} type="button">
+                <HiOutlineReply />
+              </PostDetailsButtonBack>
 
-            <PostDetailsButtonLike onClick={onLikeButtonClick} liked={liked} disabled={!user} type="button">
-              <PostDetailsButtonLikeIcon>
-                <HiEmojiSad />
-              </PostDetailsButtonLikeIcon>
-              {likeCount}
-            </PostDetailsButtonLike>
+              <PostDetailsButtonLike onClick={onLikeButtonClick} liked={liked} disabled={!user} type="button">
+                <PostDetailsButtonLikeIcon>
+                  <HiEmojiSad />
+                </PostDetailsButtonLikeIcon>
+                {likeCount}
+              </PostDetailsButtonLike>
 
-            <PostDetailsButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user}>
-              <HiOutlineTrash />
-            </PostDetailsButtonDelete>
-          </PostDetailsButtons>
-        )}
+              <PostDetailsButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user}>
+                <HiOutlineTrash />
+              </PostDetailsButtonDelete>
+            </PostDetailsButtons>
+          )}
 
-        {user && <PostDetailsForm />}
-      </PostDetailsBody>
+          {user && <PostDetailsForm />}
+        </PostDetailsBody>
+      </motion.div>
     </PostDetailsContainer>
   );
 };

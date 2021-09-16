@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
 import Loader from "react-loader-spinner";
+import { motion } from "framer-motion";
 
 import { HiEmojiSad, HiOutlineAnnotation, HiOutlineTrash } from "react-icons/hi";
 
@@ -142,39 +143,41 @@ const Post = ({
   };
 
   return (
-    <PostContainer>
-      <PostHeader>
-        <PostHeaderAvatar>{getLetterForAvatar(userLogin)}</PostHeaderAvatar>
-        <PostHeaderUserLogin>{userLogin}</PostHeaderUserLogin>
-      </PostHeader>
-      <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
-      <PostBody>{postText}</PostBody>
-      {loading ? (
-        <PostButtonsLoaderContainer>
-          <Loader type="ThreeDots" color={colors.primaryBlue} height={42} width={50} timeout={0} />
-        </PostButtonsLoaderContainer>
-      ) : (
-        <PostButtons>
-          <PostButtonLike onClick={onLikeButtonClick} liked={liked} disabled={!user} type="button">
-            <PostButtonLikeIcon>
-              <HiEmojiSad />
-            </PostButtonLikeIcon>
-            {likeCount}
-          </PostButtonLike>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      <PostContainer>
+        <PostHeader>
+          <PostHeaderAvatar>{getLetterForAvatar(userLogin)}</PostHeaderAvatar>
+          <PostHeaderUserLogin>{userLogin}</PostHeaderUserLogin>
+        </PostHeader>
+        <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
+        <PostBody>{postText}</PostBody>
+        {loading ? (
+          <PostButtonsLoaderContainer>
+            <Loader type="ThreeDots" color={colors.primaryBlue} height={42} width={50} timeout={0} />
+          </PostButtonsLoaderContainer>
+        ) : (
+          <PostButtons>
+            <PostButtonLike onClick={onLikeButtonClick} liked={liked} disabled={!user} type="button">
+              <PostButtonLikeIcon>
+                <HiEmojiSad />
+              </PostButtonLikeIcon>
+              {likeCount}
+            </PostButtonLike>
 
-          <PostButtonComments onClick={onCommentsButtonClick} type="button">
-            <PostButtonCommentsIcon>
-              <HiOutlineAnnotation />
-            </PostButtonCommentsIcon>
-            {commentCount}
-          </PostButtonComments>
+            <PostButtonComments onClick={onCommentsButtonClick} type="button">
+              <PostButtonCommentsIcon>
+                <HiOutlineAnnotation />
+              </PostButtonCommentsIcon>
+              {commentCount}
+            </PostButtonComments>
 
-          <PostButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user} type="button">
-            <HiOutlineTrash />
-          </PostButtonDelete>
-        </PostButtons>
-      )}
-    </PostContainer>
+            <PostButtonDelete onClick={onDeleteButtonClick} disabled={user !== userLogin || !user} type="button">
+              <HiOutlineTrash />
+            </PostButtonDelete>
+          </PostButtons>
+        )}
+      </PostContainer>
+    </motion.div>
   );
 };
 
