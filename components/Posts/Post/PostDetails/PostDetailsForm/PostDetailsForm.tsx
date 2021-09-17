@@ -1,10 +1,11 @@
 import React from "react";
+import { gql, useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import Loader from "react-loader-spinner";
 
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 
-import { MAX_AMOUNT_OF_COMMET_LETTERS } from "../../../../../consts/consts";
+import { MAX_AMOUNT_OF_COMMENT_LETTERS } from "../../../../../consts/consts";
 
 import { checkIfLimitReached } from "../../../../../helpers/checkIfLimitReached";
 import { countAmountOfLetters } from "../../../../../helpers/countAmountOfLetters";
@@ -28,6 +29,10 @@ interface FormData {
   commentText: string;
 }
 
+interface PostDetailsFormProps {
+  id?: string;
+}
+
 const initialFormState = {
   commentText: "",
 };
@@ -37,9 +42,34 @@ const variants = {
   hidden: { opacity: 0 },
 };
 
-const PostDetailsForm = (): React.ReactElement => {
+const WRITE_COMMENT_MUTATION = gql`
+  mutation ($id: String!, $commentText: String!) {
+    writeComment(id: $id, commentText: $commentText) {
+      id
+      comments {
+        id
+        commentText
+        createdAt
+        userLogin
+      }
+      commentCount
+    }
+  }
+`;
+
+const PostDetailsForm = ({ id }: PostDetailsFormProps): React.ReactElement => {
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const [showForm, setShowForm] = React.useState(false);
+
+  const [writeComment, { loading, error }] = useMutation(WRITE_COMMENT_MUTATION, {
+    update() {
+      setFormData(initialFormState);
+    },
+    variables: {
+      id,
+      commentText: formData.commentText,
+    },
+  });
 
   const onFormInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData((formData) => ({
@@ -57,16 +87,14 @@ const PostDetailsForm = (): React.ReactElement => {
   };
 
   const onSendButtonClick = () => {
-    setFormData(initialFormState);
+    writeComment();
   };
 
-  const commentLetterLimit = countAmountOfLetters(formData.commentText, MAX_AMOUNT_OF_COMMET_LETTERS);
+  const commentLetterLimit = countAmountOfLetters(formData.commentText, MAX_AMOUNT_OF_COMMENT_LETTERS);
 
-  const isLimitReached = checkIfLimitReached(formData.commentText, MAX_AMOUNT_OF_COMMET_LETTERS);
+  const isLimitReached = checkIfLimitReached(formData.commentText, MAX_AMOUNT_OF_COMMENT_LETTERS);
 
   const commentLength = formData.commentText.length;
-
-  const loading = false;
 
   return (
     <PostDetailsFormContainer>
@@ -88,7 +116,7 @@ const PostDetailsForm = (): React.ReactElement => {
           <PostDetailsFormBodyProgressBox>
             <PostDetailsFormBodyProgress progress={commentLetterLimit} limit={isLimitReached} />
             <PostDetailsFormBodyPostLength limit={isLimitReached}>
-              {MAX_AMOUNT_OF_COMMET_LETTERS} / {commentLength}
+              {MAX_AMOUNT_OF_COMMENT_LETTERS} / {commentLength}
             </PostDetailsFormBodyPostLength>
           </PostDetailsFormBodyProgressBox>
 

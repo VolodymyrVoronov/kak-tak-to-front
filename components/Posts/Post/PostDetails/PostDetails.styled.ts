@@ -73,7 +73,7 @@ const PostDetailsText = styled.p`
   display: flex;
   flex-grow: 1;
 
-  min-height: 200px;
+  min-height: 150px;
 
   padding: 10px 0;
 
@@ -239,6 +239,22 @@ const PostDetailsButtonDelete = styled.button`
   }
 `;
 
+const PostDetailsComments = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin: 15px 0 10px 0;
+`;
+
+const PostDetailsCommentsAmounut = styled.p`
+  display: flex;
+
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  color: ${colors.primaryBlue};
+`;
+
 export {
   PostDetailsContainer,
   PostDetailsBody,
@@ -253,4 +269,6 @@ export {
   PostDetailsButtonLike,
   PostDetailsButtonLikeIcon,
   PostDetailsButtonDelete,
+  PostDetailsComments,
+  PostDetailsCommentsAmounut,
 };

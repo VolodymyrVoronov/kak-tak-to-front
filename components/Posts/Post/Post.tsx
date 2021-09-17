@@ -149,7 +149,7 @@ const Post = ({
           <PostHeaderAvatar>{getLetterForAvatar(userLogin)}</PostHeaderAvatar>
           <PostHeaderUserLogin>{userLogin}</PostHeaderUserLogin>
         </PostHeader>
-        <PostCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostCreatedAt>
+        <PostCreatedAt>{showTimePostWasWritten(createdAt)} назад</PostCreatedAt>
         <PostBody>{postText}</PostBody>
         {loading ? (
           <PostButtonsLoaderContainer>

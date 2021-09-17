@@ -1,15 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { gql, useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import Loader from "react-loader-spinner";
-
-import { gql, useMutation } from "@apollo/client";
 
 import { HiOutlineReply, HiEmojiSad, HiOutlineTrash } from "react-icons/hi";
 
 import PostsHeader from "../../PostsHeader/PostsHeader";
-import ProgressLoader from "./../../../common/ProgressLoader/ProgressLoader";
 import PostDetailsForm from "./PostDetailsForm/PostDetailsForm";
+import PostDetailsComment from "./PostDetailsComment/PostDetailsComment";
 
 import { getLetterForAvatar } from "../../../../helpers/getLetterForAvatar";
 import { showTimePostWasWritten } from "../../../../helpers/showTimePostWasWritten";
@@ -30,16 +29,13 @@ import {
   PostDetailsButtonLike,
   PostDetailsButtonLikeIcon,
   PostDetailsButtonDelete,
+  PostDetailsComments,
+  PostDetailsCommentsAmounut,
 } from "./PostDetails.styled";
 
 import { colors } from "../../../../styles/colorPalette";
 
 interface Like {
-  id: string;
-  userLogin: string;
-}
-
-interface Comment {
   id: string;
   userLogin: string;
 }
@@ -154,6 +150,8 @@ const PostDetails = ({
     likePost();
   };
 
+  let postId = id;
+
   return (
     <PostDetailsContainer>
       <PostsHeader />
@@ -163,7 +161,7 @@ const PostDetails = ({
             <PostDetailsHeaderAvatar>{getLetterForAvatar(userLogin)}</PostDetailsHeaderAvatar>
             <PostDetailsHeaderUserLogin>{userLogin}</PostDetailsHeaderUserLogin>
           </PostDetailsHeader>
-          <PostDetailsCreatedAt>{showTimePostWasWritten(createdAt)} ago.</PostDetailsCreatedAt>
+          <PostDetailsCreatedAt>{showTimePostWasWritten(createdAt)} назад</PostDetailsCreatedAt>
           <PostDetailsText>{postText}</PostDetailsText>
 
           {loading ? (
@@ -189,7 +187,28 @@ const PostDetails = ({
             </PostDetailsButtons>
           )}
 
-          {user && <PostDetailsForm />}
+          {user && <PostDetailsForm id={id} />}
+
+          <PostDetailsComments>
+            <PostDetailsCommentsAmounut>
+              {commentCount === 0 ? "Комментариев нет." : <>Количество комментариев: {commentCount}</>}
+            </PostDetailsCommentsAmounut>
+
+            {comments.map((comment: { id: string; commentText: string; userLogin: string; createdAt: string }) => {
+              const { id, commentText, userLogin, createdAt } = comment;
+
+              return (
+                <PostDetailsComment
+                  key={id}
+                  id={id}
+                  commentText={commentText}
+                  userLogin={userLogin}
+                  createdAt={createdAt}
+                  postId={postId}
+                />
+              );
+            })}
+          </PostDetailsComments>
         </PostDetailsBody>
       </motion.div>
     </PostDetailsContainer>
