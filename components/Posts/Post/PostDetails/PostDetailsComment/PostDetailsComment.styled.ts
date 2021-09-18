@@ -10,7 +10,7 @@ const PostDetailsCommentContainer = styled.div`
 
   background-color: #f1f1f1;
 
-  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.35);
 `;
 
 const PostDetailsCommentHeader = styled.div`
