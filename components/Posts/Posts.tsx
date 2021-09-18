@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { motion } from "framer-motion";
 
 import PostsHeader from "./PostsHeader/PostsHeader";
 import PostsForm from "./PostsForm/PostsForm";
@@ -36,13 +37,14 @@ const Posts = (): React.ReactElement => {
   if (error) return <p>Error {error}</p>;
 
   const { getPosts } = data;
-  console.log(getPosts);
 
   return (
     <PostsContainer>
       <PostsHeader />
       <PostsContent>
-        {!loading && <>{isUserLogged ? <PostsForm /> : <NoUserIsLogged />}</>}
+        <motion.div initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 2 }}>
+          {isUserLogged ? <PostsForm /> : <NoUserIsLogged />}
+        </motion.div>
 
         {getPosts.length === 0 ? (
           <PostsNoPostsTitle>Сообщений нет.</PostsNoPostsTitle>

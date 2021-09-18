@@ -103,7 +103,7 @@ const PostDetailsForm = ({ id }: PostDetailsFormProps): React.ReactElement => {
       </PostDetailsFormTitle>
 
       {showForm && (
-        <motion.div initial="hidden" animate="visible" variants={variants}>
+        <motion.div initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
           <PostDetailsFormBody>
             <PostDetailsFormBodyInput
               onChange={onFormInputChange}
