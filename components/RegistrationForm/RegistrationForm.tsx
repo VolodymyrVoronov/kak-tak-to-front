@@ -1,9 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
+import { motion } from "framer-motion";
+import Loader from "react-loader-spinner";
 
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import Loader from "react-loader-spinner";
 
 import {
   RegistrationFormContainer,
@@ -115,80 +116,82 @@ const RegistrationForm = (): React.ReactElement => {
 
   return (
     <RegistrationFormContainer isValid={isFormValid}>
-      <RegistrationFormBody>
-        <RegistrationFormTitle>Регистрация</RegistrationFormTitle>
-        <RegistrationFormFields>
-          <RegistrationFormField>
-            <RegistrationFormFieldLabel htmlFor="userLogin">Логин:</RegistrationFormFieldLabel>
-            <RegistrationFormFieldError>{errors?.userLoginLength || errors?.userLogin}</RegistrationFormFieldError>
-            <RegistrationFormFieldInput
-              onChange={onFormInputChange}
-              value={formData.userLogin}
-              type="text"
-              id="userLogin"
-              name="userLogin"
-              ref={loginInput}
-            />
-          </RegistrationFormField>
-
-          <RegistrationFormField>
-            <RegistrationFormFieldLabel htmlFor="password">Пароль:</RegistrationFormFieldLabel>
-            <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
-            <RegistrationFormFieldInputPassword>
+      <motion.div initial={{ opacity: 0, x: -150 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
+        <RegistrationFormBody>
+          <RegistrationFormTitle>Регистрация</RegistrationFormTitle>
+          <RegistrationFormFields>
+            <RegistrationFormField>
+              <RegistrationFormFieldLabel htmlFor="userLogin">Логин:</RegistrationFormFieldLabel>
+              <RegistrationFormFieldError>{errors?.userLoginLength || errors?.userLogin}</RegistrationFormFieldError>
               <RegistrationFormFieldInput
                 onChange={onFormInputChange}
-                value={formData.password}
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
+                value={formData.userLogin}
+                type="text"
+                id="userLogin"
+                name="userLogin"
+                ref={loginInput}
               />
-              <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
-                {showPassword ? <HiEyeOff /> : <HiEye />}
-              </RegistrationFormFieldInputShowPasswordButton>
-            </RegistrationFormFieldInputPassword>
-          </RegistrationFormField>
+            </RegistrationFormField>
 
-          <RegistrationFormField>
-            <RegistrationFormFieldLabel htmlFor="confirmPassword">Подтвердите пароль:</RegistrationFormFieldLabel>
-            <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
-            <RegistrationFormFieldInputPassword>
-              <RegistrationFormFieldInput
-                onChange={onFormInputChange}
-                value={formData.confirmPassword}
-                type={showPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-              />
-              <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
-                {showPassword ? <HiEyeOff /> : <HiEye />}
-              </RegistrationFormFieldInputShowPasswordButton>
-            </RegistrationFormFieldInputPassword>
-          </RegistrationFormField>
-        </RegistrationFormFields>
-        <RegistrationFormButtons>
-          <RegistrationFormButtonLogin
-            onClick={onRegistrationButtoCick}
-            disabled={isRegistrationButtonDisabled || loading}
-            type="button"
-          >
-            {loading ? (
-              <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
-            ) : (
-              "Регистрация"
-            )}
-          </RegistrationFormButtonLogin>
-          <RegistrationFormButtonClear
-            onClick={onClearButtonClick}
-            disabled={isClearButtonDisabled || loading}
-            type="button"
-          >
-            Очистить
-          </RegistrationFormButtonClear>
-          <RegistrationFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
-            Назад
-          </RegistrationFormButtonBack>
-        </RegistrationFormButtons>
-      </RegistrationFormBody>
+            <RegistrationFormField>
+              <RegistrationFormFieldLabel htmlFor="password">Пароль:</RegistrationFormFieldLabel>
+              <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
+              <RegistrationFormFieldInputPassword>
+                <RegistrationFormFieldInput
+                  onChange={onFormInputChange}
+                  value={formData.password}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                />
+                <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                </RegistrationFormFieldInputShowPasswordButton>
+              </RegistrationFormFieldInputPassword>
+            </RegistrationFormField>
+
+            <RegistrationFormField>
+              <RegistrationFormFieldLabel htmlFor="confirmPassword">Подтвердите пароль:</RegistrationFormFieldLabel>
+              <RegistrationFormFieldError>{errors?.confirmPassword}</RegistrationFormFieldError>
+              <RegistrationFormFieldInputPassword>
+                <RegistrationFormFieldInput
+                  onChange={onFormInputChange}
+                  value={formData.confirmPassword}
+                  type={showPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                />
+                <RegistrationFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                </RegistrationFormFieldInputShowPasswordButton>
+              </RegistrationFormFieldInputPassword>
+            </RegistrationFormField>
+          </RegistrationFormFields>
+          <RegistrationFormButtons>
+            <RegistrationFormButtonLogin
+              onClick={onRegistrationButtoCick}
+              disabled={isRegistrationButtonDisabled || loading}
+              type="button"
+            >
+              {loading ? (
+                <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
+              ) : (
+                "Регистрация"
+              )}
+            </RegistrationFormButtonLogin>
+            <RegistrationFormButtonClear
+              onClick={onClearButtonClick}
+              disabled={isClearButtonDisabled || loading}
+              type="button"
+            >
+              Очистить
+            </RegistrationFormButtonClear>
+            <RegistrationFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
+              Назад
+            </RegistrationFormButtonBack>
+          </RegistrationFormButtons>
+        </RegistrationFormBody>
+      </motion.div>
     </RegistrationFormContainer>
   );
 };

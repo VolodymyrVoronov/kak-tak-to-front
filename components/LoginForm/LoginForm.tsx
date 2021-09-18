@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
+import { motion } from "framer-motion";
 import Loader from "react-loader-spinner";
 
 import { HiEye, HiEyeOff } from "react-icons/hi";
@@ -110,59 +111,65 @@ const LoginForm = (): React.ReactElement => {
 
   return (
     <LoginFormContainer isValid={isFormValid}>
-      <LoginFormBody>
-        <LoginFormTitle>Авторизация</LoginFormTitle>
-        <LoginFormFields>
-          <LoginFormField>
-            <LoginFormFieldLabel htmlFor="userLogin">Логин:</LoginFormFieldLabel>
+      <motion.div initial={{ opacity: 0, x: -150 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
+        <LoginFormBody>
+          <LoginFormTitle>Авторизация</LoginFormTitle>
+          <LoginFormFields>
+            <LoginFormField>
+              <LoginFormFieldLabel htmlFor="userLogin">Логин:</LoginFormFieldLabel>
 
-            <LoginFormFieldError>{errors?.userNotFound}</LoginFormFieldError>
+              <LoginFormFieldError>{errors?.userNotFound}</LoginFormFieldError>
 
-            <LoginFormFieldInput
-              onChange={onFormInputChange}
-              value={formData.userLogin}
-              type="text"
-              id="userLogin"
-              name="userLogin"
-              ref={loginInput}
-            />
-          </LoginFormField>
-
-          <LoginFormField>
-            <LoginFormFieldLabel htmlFor="password">Пароль:</LoginFormFieldLabel>
-
-            <LoginFormFieldError>{errors?.wrongCredentials}</LoginFormFieldError>
-
-            <LoginFormFieldInputPassword>
               <LoginFormFieldInput
                 onChange={onFormInputChange}
-                value={formData.password}
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
+                value={formData.userLogin}
+                type="text"
+                id="userLogin"
+                name="userLogin"
+                ref={loginInput}
               />
-              <LoginFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
-                {showPassword ? <HiEyeOff /> : <HiEye />}
-              </LoginFormFieldInputShowPasswordButton>
-            </LoginFormFieldInputPassword>
-          </LoginFormField>
-        </LoginFormFields>
-        <LoginFormButtons>
-          <LoginFormButtonLogin onClick={onLoginButtoCick} disabled={isLoginButtonDisabled || loading} type="button">
-            {loading ? (
-              <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
-            ) : (
-              "Вход"
-            )}
-          </LoginFormButtonLogin>
-          <LoginFormButtonClear onClick={onClearButtonClick} disabled={isClearButtonDisabled || loading} type="button">
-            Очистить
-          </LoginFormButtonClear>
-          <LoginFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
-            Назад
-          </LoginFormButtonBack>
-        </LoginFormButtons>
-      </LoginFormBody>
+            </LoginFormField>
+
+            <LoginFormField>
+              <LoginFormFieldLabel htmlFor="password">Пароль:</LoginFormFieldLabel>
+
+              <LoginFormFieldError>{errors?.wrongCredentials}</LoginFormFieldError>
+
+              <LoginFormFieldInputPassword>
+                <LoginFormFieldInput
+                  onChange={onFormInputChange}
+                  value={formData.password}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                />
+                <LoginFormFieldInputShowPasswordButton onClick={onShowPasswordClick}>
+                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                </LoginFormFieldInputShowPasswordButton>
+              </LoginFormFieldInputPassword>
+            </LoginFormField>
+          </LoginFormFields>
+          <LoginFormButtons>
+            <LoginFormButtonLogin onClick={onLoginButtoCick} disabled={isLoginButtonDisabled || loading} type="button">
+              {loading ? (
+                <Loader type="ThreeDots" color={colors.primaryBlue} height={10} width={50} timeout={0} />
+              ) : (
+                "Вход"
+              )}
+            </LoginFormButtonLogin>
+            <LoginFormButtonClear
+              onClick={onClearButtonClick}
+              disabled={isClearButtonDisabled || loading}
+              type="button"
+            >
+              Очистить
+            </LoginFormButtonClear>
+            <LoginFormButtonBack onClick={onBackButtonClick} disabled={loading} type="button">
+              Назад
+            </LoginFormButtonBack>
+          </LoginFormButtons>
+        </LoginFormBody>
+      </motion.div>
     </LoginFormContainer>
   );
 };
