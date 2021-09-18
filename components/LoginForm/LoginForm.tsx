@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
+import Loader from "react-loader-spinner";
 
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import Loader from "react-loader-spinner";
 
 import {
   LoginFormContainer,
@@ -115,7 +115,9 @@ const LoginForm = (): React.ReactElement => {
         <LoginFormFields>
           <LoginFormField>
             <LoginFormFieldLabel htmlFor="userLogin">Логин:</LoginFormFieldLabel>
+
             <LoginFormFieldError>{errors?.userNotFound}</LoginFormFieldError>
+
             <LoginFormFieldInput
               onChange={onFormInputChange}
               value={formData.userLogin}
@@ -128,7 +130,9 @@ const LoginForm = (): React.ReactElement => {
 
           <LoginFormField>
             <LoginFormFieldLabel htmlFor="password">Пароль:</LoginFormFieldLabel>
+
             <LoginFormFieldError>{errors?.wrongCredentials}</LoginFormFieldError>
+
             <LoginFormFieldInputPassword>
               <LoginFormFieldInput
                 onChange={onFormInputChange}

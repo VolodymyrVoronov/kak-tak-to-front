@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { device } from "../../consts/breakPoints";
 import { colors } from "../../styles/colorPalette";
 
 const PostsContainer = styled.div`
@@ -12,6 +13,18 @@ const PostsContent = styled.div`
   grid-template-columns: 30% 70%;
 `;
 
+const PostsNoPostsTitle = styled.p`
+  display: flex;
+  justify-content: center;
+
+  padding: 25px;
+
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 400;
+  color: ${colors.primaryBlue};
+`;
+
 const PostsItems = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -22,6 +35,18 @@ const PostsItems = styled.div`
 
   height: 91.8vh;
   overflow-y: scroll;
+
+  @media ${device.tablet} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media ${device.laptop} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${device.desktop} {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
-export { PostsContainer, PostsContent, PostsItems };
+export { PostsContainer, PostsContent, PostsNoPostsTitle, PostsItems };
