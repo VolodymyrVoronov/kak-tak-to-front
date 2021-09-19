@@ -18,6 +18,16 @@ interface Like {
   userLogin: string;
 }
 
+interface Post {
+  id: string;
+  postText: string;
+  createdAt: string;
+  userLogin: string;
+  likeCount: number;
+  commentCount: number;
+  likes: Like[];
+}
+
 const Posts = (): React.ReactElement => {
   const { loading, data, error } = useQuery(FETCH_POSTS_QUERY);
 
@@ -51,32 +61,22 @@ const Posts = (): React.ReactElement => {
           <PostsNoPostsTitle>Сообщений нет.</PostsNoPostsTitle>
         ) : (
           <PostsItems>
-            {getPosts.map(
-              (post: {
-                id: string;
-                postText: string;
-                createdAt: string;
-                userLogin: string;
-                likeCount: number;
-                commentCount: number;
-                likes: Like[];
-              }) => {
-                const { id, postText, createdAt, userLogin, likeCount, commentCount, likes } = post;
+            {getPosts.map((post: Post) => {
+              const { id, postText, createdAt, userLogin, likeCount, commentCount, likes } = post;
 
-                return (
-                  <Post
-                    key={id}
-                    id={id}
-                    postText={postText}
-                    createdAt={createdAt}
-                    userLogin={userLogin}
-                    likeCount={likeCount}
-                    commentCount={commentCount}
-                    likes={likes}
-                  />
-                );
-              }
-            )}
+              return (
+                <Post
+                  key={id}
+                  id={id}
+                  postText={postText}
+                  createdAt={createdAt}
+                  userLogin={userLogin}
+                  likeCount={likeCount}
+                  commentCount={commentCount}
+                  likes={likes}
+                />
+              );
+            })}
           </PostsItems>
         )}
       </PostsContent>

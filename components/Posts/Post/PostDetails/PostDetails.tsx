@@ -45,7 +45,6 @@ interface Comment {
   userLogin: string;
   createdAt: string;
   commentText: string;
-  [key: string]: string;
 }
 
 interface PostDetailsProps {
