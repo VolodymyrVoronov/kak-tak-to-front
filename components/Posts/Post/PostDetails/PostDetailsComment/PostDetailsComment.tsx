@@ -83,4 +83,4 @@ const PostDetailsComment = ({
   );
 };
 
-export default PostDetailsComment;
+export default React.memo(PostDetailsComment);

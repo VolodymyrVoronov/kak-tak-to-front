@@ -40,6 +40,14 @@ interface Like {
   userLogin: string;
 }
 
+interface Comment {
+  id: string;
+  userLogin: string;
+  createdAt: string;
+  commentText: string;
+  [key: string]: string;
+}
+
 interface PostDetailsProps {
   id?: string;
   postText: string;
@@ -48,7 +56,7 @@ interface PostDetailsProps {
   likeCount: number;
   commentCount: number;
   likes: Like[];
-  comments: any;
+  comments: Comment[];
 }
 
 interface DeletePostMutation {
@@ -68,7 +76,7 @@ interface DeletePostMutation {
       createdAt: string;
       commentText: string;
     };
-    filter: any;
+    filter: (id: any | string) => boolean;
   };
 }
 
@@ -194,7 +202,7 @@ const PostDetails = ({
               {commentCount === 0 ? "Комментариев нет." : <>Количество комментариев: {commentCount}</>}
             </PostDetailsCommentsAmounut>
 
-            {comments.map((comment: { id: string; commentText: string; userLogin: string; createdAt: string }) => {
+            {comments.map((comment: Comment) => {
               const { id, commentText, userLogin, createdAt } = comment;
 
               return (

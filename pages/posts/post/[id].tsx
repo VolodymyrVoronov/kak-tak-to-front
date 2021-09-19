@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 
 import PostDetails from "./../../../components/Posts/Post/PostDetails/PostDetails";
 import ProgressLoader from "../../../components/common/ProgressLoader/ProgressLoader";
+import Error from "../../../components/common/Error/Error";
 
 const FETCH_POST_QUERY = gql`
   query ($id: ID!) {
@@ -40,7 +41,7 @@ const Post: NextPage = () => {
   });
 
   if (loading) return <ProgressLoader />;
-  if (error) return <p>Error</p>;
+  if (error) return <Error path="/posts" />;
 
   const { userLogin, postText, createdAt, likeCount, commentCount, likes, comments } = data.getPost;
 

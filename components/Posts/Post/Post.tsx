@@ -44,7 +44,6 @@ interface PostProps {
   commentCount: number;
   likes: Like[];
 }
-
 interface DeletePostMutation {
   getPosts: {
     id: string;
@@ -62,7 +61,7 @@ interface DeletePostMutation {
       createdAt: string;
       commentText: string;
     };
-    filter: any;
+    filter: (id: any | string) => boolean;
   };
 }
 

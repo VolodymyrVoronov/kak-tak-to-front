@@ -37,11 +37,6 @@ const initialFormState = {
   commentText: "",
 };
 
-const variants = {
-  visible: { opacity: 1 },
-  hidden: { opacity: 0 },
-};
-
 const WRITE_COMMENT_MUTATION = gql`
   mutation ($id: String!, $commentText: String!) {
     writeComment(id: $id, commentText: $commentText) {
@@ -61,7 +56,7 @@ const PostDetailsForm = ({ id }: PostDetailsFormProps): React.ReactElement => {
   const [formData, setFormData] = React.useState<FormData>(initialFormState);
   const [showForm, setShowForm] = React.useState(false);
 
-  const [writeComment, { loading, error }] = useMutation(WRITE_COMMENT_MUTATION, {
+  const [writeComment, { loading }] = useMutation(WRITE_COMMENT_MUTATION, {
     update() {
       setFormData(initialFormState);
     },
@@ -146,4 +141,4 @@ const PostDetailsForm = ({ id }: PostDetailsFormProps): React.ReactElement => {
   );
 };
 
-export default PostDetailsForm;
+export default React.memo(PostDetailsForm);
