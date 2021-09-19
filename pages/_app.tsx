@@ -21,13 +21,18 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext(() => {
-  const token = JSON.parse(localStorage.getItem("userInfo") || "{}").token;
+  try {
+    const token = JSON.parse(localStorage.getItem("userInfo") || "{}").token;
 
-  return {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : "",
-    },
-  };
+    return {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    Router.push("/");
+  }
 });
 
 const client = new ApolloClient({
