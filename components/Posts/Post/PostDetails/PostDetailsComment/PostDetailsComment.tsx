@@ -70,7 +70,7 @@ const PostDetailsComment = ({
         </PostDetailsCommentHeader>
         <PostDetailsCommentText>{commentText}</PostDetailsCommentText>
         <PostDetailsCommentFooter>
-          <PostDetailsCommentCreatedAt>{showTimePostWasWritten(createdAt)} назад.</PostDetailsCommentCreatedAt>
+          <PostDetailsCommentCreatedAt>{showTimePostWasWritten(createdAt)} назад</PostDetailsCommentCreatedAt>
 
           {user === userLogin && (
             <PostDetailsCommentDeleteButton onClick={() => onDeleteButtonClick()} disabled={loading}>

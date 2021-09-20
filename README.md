@@ -21,6 +21,9 @@
 **Post - user logged in**
 ![](./screenshots/post-user-logged-in.JPG)
 
+**Demo**
+![](./demo/demo.gif)
+
 To install und run the project:
 
 ### `1. npm install`
