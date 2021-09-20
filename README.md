@@ -15,6 +15,12 @@
 **Post**
 ![](./screenshots/post.JPG)
 
+**Posts - user logged in**
+![](./screenshots/posts-user-logged-in.JPG)
+
+**Post - user logged in**
+![](./screenshots/post-user-logged-in.JPG)
+
 To install und run the project:
 
 ### `1. npm install`
