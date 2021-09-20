@@ -9,7 +9,7 @@
 ![](./screenshots/login.JPG)
 
 **Registration**
-![](./screenshots/registration1.JPG)
+![](./screenshots/registration.JPG)
 
 **Posts**
 ![](./screenshots/posts.JPG)
